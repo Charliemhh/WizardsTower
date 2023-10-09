@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Player {
+public class Player implements Character {
 
     private int currentLocation;
 
@@ -24,16 +24,17 @@ public class Player {
         this.currentLocation = 0;
         this.adventureClassID = builder.adventureClassID;
         this.statBlock = builder.statBlock;
-        this.maxHP = ((this.statBlock.getPhysique()*2)+7);
+        this.maxHP = ((this.statBlock.getPhysique() * 2) + 7);
     }
 
     public void setMaxHP() {
-        this.maxHP = ((this.statBlock.getPhysique()*2)+7);
+        this.maxHP = ((this.statBlock.getPhysique() * 2) + 7);
     }
-
+    @Override
     public int getMaxHP() {
         return maxHP;
     }
+
     public String getName() {
         return name;
     }
@@ -41,7 +42,7 @@ public class Player {
     public int getXP() {
         return XP;
     }
-
+    @Override
     public StatBlock getStatBlock() {
         return statBlock;
     }
@@ -61,10 +62,11 @@ public class Player {
     public Map<Integer, Boolean> getEquipment() {
         return equipment;
     }
-    public void addXP(int increaseAmount){
+
+    public void addXP(int increaseAmount) {
         this.XP += increaseAmount;
-        if (this.XP > 100){
-            this.XP = (this.XP- 100);
+        while (this.XP >= 100) {
+            this.XP = (this.XP - 100);
             levelUp();
         }
     }
@@ -93,22 +95,22 @@ public class Player {
             this.statBlock = new StatBlock();
         }
 
-        public void addDefaultInventoryAndEquipment(int adventureClassID){
-            switch (adventureClassID){
+        public void addDefaultInventoryAndEquipment(int adventureClassID) {
+            switch (adventureClassID) {
                 case 0://Squire's Assistant
-                    this.equipment.put(15,true); //Iron Helmet (Equipped)
-                    this.equipment.put(30,true); //Chain-mail shirt (Equipped)
-                    this.equipment.put(7,true); //Rusty Sword
-                    this.inventory.put(2,5); //5 Throwing knifes
-                    this.inventory.put(0,2); //2 healing potions
-                    //IDs are placeholder
+                    this.equipment.put(15, true); //Iron Helmet (Equipped)
+                    this.equipment.put(30, true); //Chain-mail shirt (Equipped)
+                    this.equipment.put(7, true); //Rusty Sword
+                    this.inventory.put(2, 5); //5 Throwing knifes
+                    this.inventory.put(0, 2); //2 healing potions
+                    //IDs are placeholder also could be refactored later
                     break;
                 case 1://Clumsy Thief
-                    this.equipment.put(70,true); //Dusty Beret (Equipped)
-                    this.equipment.put(9,true); //Leather shirt (Equipped)
-                    this.equipment.put(5,true); //Wee Dagger (Equipped)
-                    this.inventory.put(2,5); //5 Throwing knifes
-                    this.inventory.put(0,2); //2 healing potions
+                    this.equipment.put(70, true); //Dusty Beret (Equipped)
+                    this.equipment.put(9, true); //Leather shirt (Equipped)
+                    this.equipment.put(5, true); //Wee Dagger (Equipped)
+                    this.inventory.put(2, 5); //5 Throwing knifes
+                    this.inventory.put(0, 2); //2 healing potions
                     break;
                 case 2://Trainee Wizard
                     break;
@@ -119,33 +121,9 @@ public class Player {
             }
         }
 
-        public void generateStats(int adventureClassID){
-            switch (adventureClassID){
-                case 0://Squire's Assistant
-                    this.statBlock.setStrength(10);
-                    this.statBlock.setBanter(5);
-                    this.statBlock.setLitheness(6);
-                    this.statBlock.setBrainy(3);
-                    this.statBlock.setPhysique(10);
-                    break;
-                case 1: //Clumsy Thief
-                    this.statBlock.setStrength(7);
-                    this.statBlock.setBanter(11);
-                    this.statBlock.setLitheness(10);
-                    this.statBlock.setBrainy(5);
-                    this.statBlock.setPhysique(4);
-                    break;
-                case 2://Trainee Wizard
-                    break;
-                case 3://Mild-Mannered Accountant
-                    break;
-                case 4://Sarcastic so-and-so
-                    break;
-            }
-        }
         public Player build() {
             this.addDefaultInventoryAndEquipment(this.adventureClassID);
-            this.generateStats(this.adventureClassID);
+            this.statBlock.generateStats(this.adventureClassID, this);
             return new Player(this);
         }
     }

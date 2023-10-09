@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PlayerTests {
 
     @Test
-    void canCreatePlayerUsingBuilder(){
+    void canCreatePlayerUsingBuilder() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
                 "Boggins Jones",
@@ -17,19 +17,21 @@ public class PlayerTests {
         assertTrue(testPlayer.getEquipment().containsKey(70));
 
     }
+
     @Test
-    void createdPlayerHasCorrectStats(){
+    void createdPlayerHasCorrectStats() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
                 "Harry Tibbs",
                 0).build();
         //Act
         //Assert
-        assertEquals(10 , testPlayer.getStatBlock().getStrength());
+        assertEquals(10, testPlayer.getStatBlock().getStrength());
         assertEquals(5, testPlayer.getStatBlock().getBanter());
     }
+
     @Test
-    void physiqueStatIncreasesMaxHP(){
+    void physiqueStatIncreasesMaxHP() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
                 "Yerry Curtains",
@@ -40,7 +42,7 @@ public class PlayerTests {
     }
 
     @Test
-    void canAddXPToPlayer(){
+    void canAddXPToPlayer() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
                 "Ham Fiesta",
@@ -50,8 +52,9 @@ public class PlayerTests {
         //Assert
         assertEquals(50, testPlayer.getXP());
     }
+
     @Test
-    void playersStatsIncreaseOnLevelUp(){
+    void playersStatsIncreaseOnLevelUp() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
                 "The Big Oreo", 0
@@ -59,7 +62,19 @@ public class PlayerTests {
         //Act
         testPlayer.addXP(150);
         //Assert
-        assertEquals(13 ,testPlayer.getStatBlock().getPhysique());
+        assertEquals(13, testPlayer.getStatBlock().getPhysique());
 
+    }
+
+    @Test
+    void canLevelUpMultipleTimes() {
+        //Arrange
+        Player testPlayer = new Player.PlayerBuilder(
+                "Doritos Slims", 0
+        ).build();
+        //Act
+        testPlayer.addXP(300);
+        //Assert
+        assertEquals(19, testPlayer.getStatBlock().getPhysique());
     }
 }
