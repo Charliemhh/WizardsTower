@@ -38,4 +38,28 @@ public class PlayerTests {
         assertEquals(27, testPlayer.getMaxHP());
         //If the hp formula changes, so should this test
     }
+
+    @Test
+    void canAddXPToPlayer(){
+        //Arrange
+        Player testPlayer = new Player.PlayerBuilder(
+                "Ham Fiesta",
+                0).build();
+        //Act
+        testPlayer.addXP(50);
+        //Assert
+        assertEquals(50, testPlayer.getXP());
+    }
+    @Test
+    void playersStatsIncreaseOnLevelUp(){
+        //Arrange
+        Player testPlayer = new Player.PlayerBuilder(
+                "The Big Oreo", 0
+        ).build();
+        //Act
+        testPlayer.addXP(150);
+        //Assert
+        assertEquals(13 ,testPlayer.getStatBlock().getPhysique());
+
+    }
 }

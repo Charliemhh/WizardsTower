@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class StatBlock {
     private int strength; //Brute force damage
@@ -46,5 +45,30 @@ public class StatBlock {
 
     public void setPhysique(int physique) {
         this.physique = physique;
+    }
+
+    public void adventureClassGrowth(int adventureClassID) {
+        switch (adventureClassID) {
+            case 0:
+                this.setBrainy(this.brainy + 1);
+                this.setBanter(this.banter + 1);
+                this.setPhysique(this.physique + 3);
+                this.setLitheness(this.litheness + 2);
+                this.setStrength(this.strength + 3);
+                break;
+            case 1:
+                this.setBrainy(this.brainy + 2);
+                this.setBanter(this.banter + 3);
+                this.setPhysique(this.physique + 1);
+                this.setLitheness(this.litheness + 3);
+                this.setStrength(this.strength + 1);
+                break;
+            case 2://Trainee Wizard
+                break;
+            case 3://Mild-Mannered Accountant
+                break;
+            case 4: //Sarcastic so-and-so
+                break;
+        }
     }
 }

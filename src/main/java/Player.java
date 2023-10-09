@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,16 +7,11 @@ public class Player {
 
     private final String name;
 
-    private int adventureClassID;
-
+    private final int adventureClassID;
     private int currentHP;
-
-
     private int maxHP;
-
     private HashMap<Integer, Integer> inventory;
     private HashMap<Integer, Boolean> equipment;
-
     private StatBlock statBlock;
 
     private int XP;
@@ -36,20 +30,20 @@ public class Player {
     public void setMaxHP() {
         this.maxHP = ((this.statBlock.getPhysique()*2)+7);
     }
+
     public int getMaxHP() {
         return maxHP;
     }
-
     public String getName() {
         return name;
     }
 
-    public StatBlock getStatBlock() {
-        return statBlock;
+    public int getXP() {
+        return XP;
     }
 
-    public void setStatBlock(StatBlock statBlock) {
-        this.statBlock = statBlock;
+    public StatBlock getStatBlock() {
+        return statBlock;
     }
 
     public int getCurrentLocation() {
@@ -67,6 +61,19 @@ public class Player {
     public Map<Integer, Boolean> getEquipment() {
         return equipment;
     }
+    public void addXP(int increaseAmount){
+        this.XP += increaseAmount;
+        if (this.XP > 100){
+            this.XP = (this.XP- 100);
+            levelUp();
+        }
+    }
+
+    private void levelUp() {
+        this.statBlock.adventureClassGrowth(this.adventureClassID);
+        this.setMaxHP();
+    }
+
     public static class PlayerBuilder {
 
         private final String name;
