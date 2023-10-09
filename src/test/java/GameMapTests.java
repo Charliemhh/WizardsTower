@@ -28,21 +28,34 @@ public class GameMapTests {
     }
 
     @Test
+    void getCurrentRoomReturnsCorrectly() {
+        //Assert
+        assert (testMap.getCurrentRoomIndex() == 0);
+        //the default value after creation
+    }
+
+    @Test
+    void setCurrentRoomFunctionsCorrectly() {
+        testMap.setCurrentRoomIndex(2);
+        assert (testMap.getCurrentRoomIndex() == 2);
+    }
+
+    @Test
     void defaultAdjacentRoomShouldBeCorrect() {
         //Arrange
         LinkedList<Integer> testIndex0 = new LinkedList<>();
         testIndex0.add(1);
         testIndex0.add(2);
         //Act
-        GameMap testMap = new GameMap(3, connections);
         //Assert
         assert (testIndex0.containsAll(testMap.getAdjacentRooms()));
         //Expect 1 and 2 for location 0
 
 
     }
+
     @Test
-    void newAdjacentRoomShouldBeCorrect(){
+    void newAdjacentRoomShouldBeCorrect() {
         //Arrange
         LinkedList<Integer> testIndex1 = new LinkedList<>();
         testIndex1.add(0);
