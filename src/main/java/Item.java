@@ -11,7 +11,7 @@ public class Item {
         return "Item Not Found";
     }
 
-    public String getDesc(int itemID) {
+    public static String getDesc(int itemID) {
         switch (itemID){
             case 0:
                 return "A burbling flask of ominously sweet liquid, restores your health.";
@@ -28,6 +28,7 @@ public class Item {
             itemEffect(itemID, player);
             return quantity-1;
         } else {
+            System.out.println("You are out of stock!");
             return quantity;
         }
     }
