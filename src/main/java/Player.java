@@ -13,7 +13,7 @@ public class Player implements Character {
 
     private int maxHP;
     private final Inventory inventory;
-    private final HashMap<Integer, Boolean> equipment;
+    private final Equipment equipment;
     private final StatBlock statBlock;
     private int XP;
 
@@ -79,7 +79,7 @@ public class Player implements Character {
         return inventory;
     }
 
-    public Map<Integer, Boolean> getEquipment() {
+    public Equipment getEquipment() {
         return equipment;
     }
 
@@ -109,7 +109,7 @@ public class Player implements Character {
         private final String name;
         private final int adventureClassID;
         private final Inventory inventory;
-        private final HashMap<Integer, Boolean> equipment;
+        private final Equipment equipment;
         private final int XP;
 
         private final StatBlock statBlock;
@@ -118,7 +118,7 @@ public class Player implements Character {
             this.name = name;
             this.adventureClassID = adventureClassID;
             this.XP = 0;
-            this.equipment = new HashMap<>();
+            this.equipment = new Equipment();
             this.inventory = new Inventory();
             this.statBlock = new StatBlock();
         }
@@ -126,19 +126,18 @@ public class Player implements Character {
         public void addDefaultInventoryAndEquipment(int adventureClassID) {
             switch (adventureClassID) {
                 case 0://Squire's Assistant
-                    this.equipment.put(15, true); //Iron Helmet (Equipped)
-                    this.equipment.put(30, true); //Chain-mail shirt (Equipped)
-                    this.equipment.put(7, true); //Rusty Sword
-                    this.inventory.addToInventory(1, 5); //5 Throwing knifes
-                    this.inventory.addToInventory(0, 2); //2 healing potions
-                    //IDs are placeholder also could be refactored later
+                    this.equipment.setCurrentlyEquipped(0,BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(1,BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(2,BodySlot.MAINHAND);
+                    this.inventory.addToInventory(1, 5);
+                    this.inventory.addToInventory(0, 2);
                     break;
                 case 1://Clumsy Thief
-                    this.equipment.put(70, true); //Dusty Beret (Equipped)
-                    this.equipment.put(9, true); //Leather shirt (Equipped)
-                    this.equipment.put(5, true); //Wee Dagger (Equipped)
-                    this.inventory.addToInventory(1, 5); //5 Throwing knifes
-                    this.inventory.addToInventory(0, 2); //2 healing potions
+                    this.equipment.setCurrentlyEquipped(3,BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(4,BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(5,BodySlot.MAINHAND);
+                    this.inventory.addToInventory(1, 5);
+                    this.inventory.addToInventory(0, 2);
                     break;
                 case 2://Trainee Wizard
                     break;

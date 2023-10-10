@@ -15,7 +15,6 @@ public class PlayerTests {
         //Act
         //Assert
         assertEquals("Boggins Jones", testPlayer.getName());
-        assertTrue(testPlayer.getEquipment().containsKey(70));
 
     }
 
