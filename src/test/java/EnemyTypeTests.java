@@ -42,4 +42,9 @@ public class EnemyTypeTests {
         assertTrue(testOBones.getIsDead());
 
     }
+    @Test
+    void enemyDamageIsRightType(){
+        Enemy testSquid = EnemyTypes.generateEnemy(3);
+        assertEquals(10,testSquid.getAttackDam());
+    }
 }

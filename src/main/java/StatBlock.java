@@ -122,9 +122,13 @@ public class StatBlock {
                 int[] statsWere = {7, 1, 6, 2, 7};
                 this.setStats(statsWere);
                 break;
-            case 3: //Smart-Mouthed Slime
+            case 2: //Smart-Mouthed Slime
                 int[] statsSlime = {3, 7, 6, 5, 8};
                 this.setStats(statsSlime);
+                break;
+            case 3: //Under-Cooked Calamari
+                int[] statsCalamari = {4, 2, 2, 10, 6};
+                this.setStats(statsCalamari);
                 break;
             //Enemy types and stats not final.
         }

@@ -37,7 +37,7 @@ public class Enemy implements Character {
         return name;
     }
 
-    public int getAttackDam(AttackType type) {
+    public int genAttackDam(AttackType type) {
         switch (type) {
             case PHYSICAL:
                 return (this.getStatBlock().getStrength());
@@ -50,6 +50,9 @@ public class Enemy implements Character {
         }
         return attackDam;
     }
+    public int getAttackDam(){
+        return this.attackDam;
+    }
 
     public Enemy(String name, int maxHPBase, AttackType attackType, int enemyTypeID) {
         this.name = name;
@@ -57,7 +60,7 @@ public class Enemy implements Character {
         this.statBlock = new StatBlock();
         this.statBlock.generateEnemyStats(enemyTypeID);
         this.maxHP = maxHPBase + this.statBlock.getPhysique();
-        this.attackDam = getAttackDam(attackType);
+        this.attackDam = genAttackDam(attackType);
     }
 
     public boolean getIsDead() {
