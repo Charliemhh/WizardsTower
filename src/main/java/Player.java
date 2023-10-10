@@ -8,12 +8,13 @@ public class Player implements Character {
     private final String name;
 
     private final int adventureClassID;
+
     private int currentHP;
+
     private int maxHP;
     private HashMap<Integer, Integer> inventory;
     private HashMap<Integer, Boolean> equipment;
     private StatBlock statBlock;
-
     private int XP;
 
     private Player(PlayerBuilder builder) {
@@ -25,6 +26,15 @@ public class Player implements Character {
         this.adventureClassID = builder.adventureClassID;
         this.statBlock = builder.statBlock;
         this.maxHP = ((this.statBlock.getPhysique() * 2) + 7);
+    }
+
+    @Override
+    public int getCurrentHP() {
+        return currentHP;
+    }
+    @Override
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
     }
 
     public void setMaxHP() {
@@ -123,7 +133,7 @@ public class Player implements Character {
 
         public Player build() {
             this.addDefaultInventoryAndEquipment(this.adventureClassID);
-            this.statBlock.generateStats(this.adventureClassID, this);
+            this.statBlock.generateClassStats(this.adventureClassID, this);
             return new Player(this);
         }
     }
