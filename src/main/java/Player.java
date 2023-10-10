@@ -12,13 +12,16 @@ public class Player implements Character {
     private int currentHP;
 
     private int maxHP;
-    private HashMap<Integer, Integer> inventory;
-    private HashMap<Integer, Boolean> equipment;
-    private StatBlock statBlock;
+    private final HashMap<Integer, Integer> inventory;
+    private final HashMap<Integer, Boolean> equipment;
+    private final StatBlock statBlock;
     private int XP;
+
+    private boolean isDead;
 
     private Player(PlayerBuilder builder) {
         this.name = builder.name;
+        this.isDead = false;
         this.equipment = builder.equipment;
         this.inventory = builder.inventory;
         this.XP = builder.XP;
@@ -32,14 +35,19 @@ public class Player implements Character {
     public int getCurrentHP() {
         return currentHP;
     }
+
     @Override
     public void setCurrentHP(int currentHP) {
         this.currentHP = currentHP;
+        if (currentHP <= 0) {
+            setDead(true);
+        }
     }
 
     public void setMaxHP() {
         this.maxHP = ((this.statBlock.getPhysique() * 2) + 7);
     }
+
     @Override
     public int getMaxHP() {
         return maxHP;
@@ -52,6 +60,7 @@ public class Player implements Character {
     public int getXP() {
         return XP;
     }
+
     @Override
     public StatBlock getStatBlock() {
         return statBlock;
@@ -86,15 +95,23 @@ public class Player implements Character {
         this.setMaxHP();
     }
 
+    public boolean getIsDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
     public static class PlayerBuilder {
 
         private final String name;
         private final int adventureClassID;
-        private HashMap<Integer, Integer> inventory;
-        private HashMap<Integer, Boolean> equipment;
+        private final HashMap<Integer, Integer> inventory;
+        private final HashMap<Integer, Boolean> equipment;
         private final int XP;
 
-        private StatBlock statBlock;
+        private final StatBlock statBlock;
 
         public PlayerBuilder(String name, int adventureClassID) {
             this.name = name;

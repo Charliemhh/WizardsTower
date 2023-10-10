@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -22,11 +24,22 @@ public class EnemyTypeTests {
         //Arrange
         Enemy testOBones = EnemyTypes.generateEnemy(0);
         //Assert
+        assert testOBones != null;
         assertEquals(4, testOBones.getStatBlock().getPhysique());
     }
+
     @Test
-    void cannotCreateUndefinedEnemy(){
+    void cannotCreateUndefinedEnemy() {
         Enemy testFail = EnemyTypes.generateEnemy(82);
         assertNull(testFail);
+    }
+
+    @Test
+    void enemyCanDie() {
+        Enemy testOBones = EnemyTypes.generateEnemy(0);
+        assertFalse(Objects.requireNonNull(testOBones).getIsDead());
+        testOBones.setCurrentHP(0);
+        assertTrue(testOBones.getIsDead());
+
     }
 }

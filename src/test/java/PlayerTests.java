@@ -1,7 +1,8 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTests {
 
@@ -76,5 +77,16 @@ public class PlayerTests {
         testPlayer.addXP(300);
         //Assert
         assertEquals(19, testPlayer.getStatBlock().getPhysique());
+    }
+
+    @Test
+    void playerCanDie() {
+        Player testPlayer = new Player.PlayerBuilder(
+                "Doritos Slims", 0
+        ).build();
+        assertFalse(Objects.requireNonNull(testPlayer).getIsDead());
+        testPlayer.setCurrentHP(0);
+        assertTrue(testPlayer.getIsDead());
+
     }
 }

@@ -13,14 +13,16 @@ public class GameRoom {
 
     private ArrayList<Integer> trapInRoom; // ID of trap in the room
 
-    public GameRoom(int roomIndex){
+    public GameRoom(int roomIndex) {
         this.roomIndex = roomIndex;
     }
-    public GameRoom(int roomIndex, ArrayList<Integer> enemyInRoom, ArrayList<Integer> trapInRoom){
+
+    public GameRoom(int roomIndex, ArrayList<Integer> enemyInRoom, ArrayList<Integer> trapInRoom) {
         this.roomIndex = roomIndex;
         this.enemyInRoom = enemyInRoom;
         this.trapInRoom = trapInRoom;
     }
+
     public int getRoomIndex() {
         return roomIndex;
     }
@@ -28,9 +30,11 @@ public class GameRoom {
     public String getShortDesc() {
         return shortDesc;
     }
+
     public void setShortDesc(String shortDesc) {
         this.shortDesc = shortDesc;
     }
+
     public String getLongDesc() {
         return longDesc;
     }
@@ -54,6 +58,7 @@ public class GameRoom {
     public void setEnemyInRoom(ArrayList<Integer> enemyInRoom) {
         this.enemyInRoom = enemyInRoom;
     }
+
     public ArrayList<String> getPassageLabels() {
         return passageLabels;
     }

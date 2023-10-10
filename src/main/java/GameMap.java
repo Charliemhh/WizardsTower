@@ -21,9 +21,10 @@ public class GameMap {
         //with the "adjacent" rooms by adding to linked list.
     }
 
-    public ArrayList<LinkedList<Integer>> getMap(){
+    public ArrayList<LinkedList<Integer>> getMap() {
         return this.Map;
     }
+
     public int getCurrentRoomIndex() {
         return currentRoomIndex;
     }
@@ -32,7 +33,7 @@ public class GameMap {
         this.currentRoomIndex = currentRoomIndex;
     }
 
-    public LinkedList<Integer> getAdjacentRooms(){
+    public LinkedList<Integer> getAdjacentRooms() {
         return this.Map.get(this.currentRoomIndex);
     }
 }

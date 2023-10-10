@@ -6,27 +6,29 @@ import java.util.Objects;
 public class GameRoomTests {
 
     @Test
-    void canCreateRoom(){
+    void canCreateRoom() {
         //Act
         GameRoom testRoom = new GameRoom(0);
         //Assert
-        assert (testRoom.getRoomIndex()== 0);
+        assert (testRoom.getRoomIndex() == 0);
     }
+
     @Test
-    void canCreateRoomWithIDs(){
+    void canCreateRoomWithIDs() {
         //Arrange
         ArrayList<Integer> enemyInRoom = new ArrayList<>();
         enemyInRoom.add(0);
         ArrayList<Integer> trapInRoom = new ArrayList<>();
         trapInRoom.add(0);
         //Act
-        GameRoom testRoom = new GameRoom(0, enemyInRoom,trapInRoom);
+        GameRoom testRoom = new GameRoom(0, enemyInRoom, trapInRoom);
         //Assert
-        assert(testRoom.getEnemyInRoom().contains(0));
-        assert(testRoom.getTrapInRoom().contains(0));
+        assert (testRoom.getEnemyInRoom().contains(0));
+        assert (testRoom.getTrapInRoom().contains(0));
     }
+
     @Test
-    void canGetRoomDetails(){
+    void canGetRoomDetails() {
         //Arrange
         GameRoom testRoom = new GameRoom(0);
         ArrayList<String> passageDesc = new ArrayList<>();
