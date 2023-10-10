@@ -1,8 +1,6 @@
 import java.util.HashMap;
 
 public class Equipment {
-    private int equipmentID;
-    private BodySlot bodySlot;
 
     private final HashMap<Integer, BodySlot> currentlyEquipped;
 
