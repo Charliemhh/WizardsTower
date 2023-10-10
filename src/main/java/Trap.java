@@ -13,7 +13,7 @@ public class Trap {
         this.trapEffects = trapEffects;
     }
 
-    public int trapActivate(Trap trap) {
+    public int trapActivate() {
         this.activated = true;
         return this.trapEffects;
     }
@@ -40,19 +40,20 @@ public class Trap {
 
     public static class TrapCreator {
 
-        public static void createTrap(int id) {
+        public static Trap createTrap(int id) {
             switch (id) {
                 case 0://Spike Trap
-                    Trap spikeTrap = new Trap(id,
+                    return new Trap(id,
                             "Spikes suddenly erupt from the ground!"
                             , "A small tripwire leads to a set of spikes, primed to launch.",
                             5);
                 case 1://Log Trap
-                    Trap logTrap = new Trap(id,
+                    return new Trap(id,
                             "A series of large heavy logs roll towards you, threatening to bowl you over",
                             "A container of heavy logs threatens to be unleashed if one steps on the wrong panel.",
                             8);
             }
+            return null;
         }
     }
 }
