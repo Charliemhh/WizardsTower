@@ -1,12 +1,9 @@
 import org.junit.jupiter.api.Test;
-
-import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EquipmentTests {
     Player testPlayer = new Player.PlayerBuilder(
-            "Boggins Jones",
+            "test",
             1).build();
 
     @Test

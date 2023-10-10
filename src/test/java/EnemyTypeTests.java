@@ -45,6 +45,7 @@ public class EnemyTypeTests {
     @Test
     void enemyDamageIsRightType(){
         Enemy testSquid = EnemyTypes.generateEnemy(3);
+        assert testSquid != null;
         assertEquals(10,testSquid.getAttackDam());
     }
 }

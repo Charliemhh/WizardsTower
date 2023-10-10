@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class GameRoomTests {
@@ -31,9 +32,9 @@ public class GameRoomTests {
     void canGetRoomDetails() {
         //Arrange
         GameRoom testRoom = new GameRoom(0);
-        ArrayList<String> passageDesc = new ArrayList<>();
-        passageDesc.add("A Cell door");
-        passageDesc.add("Hole in Wall");
+        HashMap<Integer,String> passageDesc = new HashMap<>();
+        passageDesc.put(1,"A Cell door");
+        passageDesc.put(2,"Hole in Wall");
         //Act
         testRoom.setShortDesc("A cramped damp gaol cell");
         testRoom.setLongDesc("The walls are slick with mysterious wetness," +
@@ -45,6 +46,6 @@ public class GameRoomTests {
         assert (testRoom.getLongDesc().contains("The walls are slick with mysterious wetness," +
                 "a poorly maintained stool sits, lonely, in the corner." +
                 "A tattered cloth draped over a rotted wooden frame dominates the room."));
-        assert (Objects.equals(testRoom.getPassageLabels().get(0), "A Cell door"));
+        assert (Objects.equals(testRoom.getPassageLabels().get(1), "A Cell door"));
     }
 }

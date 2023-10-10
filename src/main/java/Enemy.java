@@ -33,10 +33,6 @@ public class Enemy implements Character {
         return this.statBlock;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int genAttackDam(AttackType type) {
         switch (type) {
             case PHYSICAL:

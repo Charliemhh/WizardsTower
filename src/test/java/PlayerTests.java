@@ -10,11 +10,11 @@ public class PlayerTests {
     void canCreatePlayerUsingBuilder() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
-                "Boggins Jones",
+                "test",
                 1).build();
         //Act
         //Assert
-        assertEquals("Boggins Jones", testPlayer.getName());
+        assertEquals("test", testPlayer.getName());
 
     }
 
@@ -22,7 +22,7 @@ public class PlayerTests {
     void createdPlayerHasCorrectStats() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
-                "Harry Tibbs",
+                "test",
                 0).build();
         //Act
         //Assert
@@ -34,7 +34,7 @@ public class PlayerTests {
     void physiqueStatIncreasesMaxHP() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
-                "Yerry Curtains",
+                "test",
                 0).build();
         //Assert
         assertEquals(27, testPlayer.getMaxHP());
@@ -45,7 +45,7 @@ public class PlayerTests {
     void canAddXPToPlayer() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
-                "Ham Fiesta",
+                "test",
                 0).build();
         //Act
         testPlayer.addXP(50);
@@ -57,7 +57,7 @@ public class PlayerTests {
     void playersStatsIncreaseOnLevelUp() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
-                "The Big Oreo", 0
+                "test", 0
         ).build();
         //Act
         testPlayer.addXP(150);
@@ -70,7 +70,7 @@ public class PlayerTests {
     void canLevelUpMultipleTimes() {
         //Arrange
         Player testPlayer = new Player.PlayerBuilder(
-                "Doritos Slims", 0
+                "test", 0
         ).build();
         //Act
         testPlayer.addXP(300);
@@ -81,7 +81,7 @@ public class PlayerTests {
     @Test
     void playerCanDie() {
         Player testPlayer = new Player.PlayerBuilder(
-                "Doritos Slims", 0
+                "test", 0
         ).build();
         assertFalse(Objects.requireNonNull(testPlayer).getIsDead());
         testPlayer.setCurrentHP(0);

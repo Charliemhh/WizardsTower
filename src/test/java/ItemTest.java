@@ -6,7 +6,7 @@ public class ItemTest {
     @Test
     void potionCanRestoreHP() {
         Player testPlayer = new Player.PlayerBuilder(
-                "Bodge Jones",
+                "test",
                 1).build();
         testPlayer.setCurrentHP(2);
         Item.useItem(0, 1, testPlayer);
@@ -16,7 +16,7 @@ public class ItemTest {
     @Test
     void itemQuantityIsReducedByUse() {
         Player testPlayer = new Player.PlayerBuilder(
-                "Bodge Jones",
+                "test",
                 1).build();
         int quantity = 1;
         quantity = Item.useItem(0, quantity, testPlayer);

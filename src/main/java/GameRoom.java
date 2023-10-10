@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameRoom {
     private final int roomIndex; //Matches with index number from GameMap
@@ -7,7 +8,7 @@ public class GameRoom {
 
     private String longDesc; //Used for examining
 
-    private ArrayList<String> passageLabels; //Text applied to possible pathways
+    private HashMap<Integer,String> passageLabels; //Text applied to possible pathways
 
     private ArrayList<Integer> enemyInRoom; // ID of enemy in the room
 
@@ -21,6 +22,7 @@ public class GameRoom {
         this.roomIndex = roomIndex;
         this.enemyInRoom = enemyInRoom;
         this.trapInRoom = trapInRoom;
+        this.passageLabels = new HashMap<>();
     }
 
     public int getRoomIndex() {
@@ -59,11 +61,11 @@ public class GameRoom {
         this.enemyInRoom = enemyInRoom;
     }
 
-    public ArrayList<String> getPassageLabels() {
+    public HashMap<Integer,String> getPassageLabels() {
         return passageLabels;
     }
 
-    public void setPassageLabels(ArrayList<String> passageLabels) {
+    public void setPassageLabels(HashMap<Integer,String> passageLabels) {
         this.passageLabels = passageLabels;
     }
 }
