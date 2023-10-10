@@ -21,16 +21,17 @@ public class Inventory {
     }
 
     public void useItem(int itemID, Player player) {
-         int newQuantity = Item.useItem(itemID, playerInventory.get(itemID), player);
-         playerInventory.put(itemID,newQuantity);//Updates with reduced Quantity
+        int newQuantity = Item.useItem(itemID, playerInventory.get(itemID), player);
+        playerInventory.put(itemID, newQuantity);//Updates with reduced Quantity
     }
 
-    public void seeInventory(){
-        for (int i: playerInventory.keySet()){
+    public void seeInventory() {
+        for (int i : playerInventory.keySet()) {
             System.out.println(Item.getName(i));
         }
     }
-    public void seeDescription(int itemID){
+
+    public void seeDescription(int itemID) {
         System.out.println(Item.getDesc(itemID));
     }
 }

@@ -39,10 +39,15 @@ public class Player implements Character {
 
     @Override
     public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
-        if (currentHP <= 0) {
-            setDead(true);
+        if (currentHP <= this.maxHP) {
+            this.currentHP = currentHP;
+            if (currentHP <= 0) {
+                setDead(true);
+            }
+        } else {
+            this.currentHP = maxHP;
         }
+
     }
 
     public void setMaxHP() {
@@ -126,16 +131,16 @@ public class Player implements Character {
         public void addDefaultInventoryAndEquipment(int adventureClassID) {
             switch (adventureClassID) {
                 case 0://Squire's Assistant
-                    this.equipment.setCurrentlyEquipped(0,BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(1,BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(2,BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(0, BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(1, BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(2, BodySlot.MAINHAND);
                     this.inventory.addToInventory(1, 5);
                     this.inventory.addToInventory(0, 2);
                     break;
                 case 1://Clumsy Thief
-                    this.equipment.setCurrentlyEquipped(3,BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(4,BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(5,BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(3, BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(4, BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(5, BodySlot.MAINHAND);
                     this.inventory.addToInventory(1, 5);
                     this.inventory.addToInventory(0, 2);
                     break;

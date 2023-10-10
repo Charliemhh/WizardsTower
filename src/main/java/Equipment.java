@@ -39,9 +39,10 @@ public class Equipment {
             System.out.println("You already have this piece of equipment!");
         }
     }
-    public void getEquippedItems(){
-        for (int id : this.currentlyEquipped.keySet()){
-            System.out.println("Slot: "+this.currentlyEquipped.get(id) + "  Name: "+getEquipmentName(id));
+
+    public void getEquippedItems() {
+        for (int id : this.currentlyEquipped.keySet()) {
+            System.out.println("Slot: " + this.currentlyEquipped.get(id) + "  Name: " + getEquipmentName(id));
         }
     }
 
