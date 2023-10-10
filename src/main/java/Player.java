@@ -12,7 +12,7 @@ public class Player implements Character {
     private int currentHP;
 
     private int maxHP;
-    private final HashMap<Integer, Integer> inventory;
+    private final Inventory inventory;
     private final HashMap<Integer, Boolean> equipment;
     private final StatBlock statBlock;
     private int XP;
@@ -29,6 +29,7 @@ public class Player implements Character {
         this.adventureClassID = builder.adventureClassID;
         this.statBlock = builder.statBlock;
         this.maxHP = ((this.statBlock.getPhysique() * 2) + 7);
+        this.currentHP = this.maxHP;
     }
 
     @Override
@@ -74,7 +75,7 @@ public class Player implements Character {
         this.currentLocation = currentLocation;
     }
 
-    public Map<Integer, Integer> getInventory() {
+    public Inventory getInventory() {
         return inventory;
     }
 
@@ -107,7 +108,7 @@ public class Player implements Character {
 
         private final String name;
         private final int adventureClassID;
-        private final HashMap<Integer, Integer> inventory;
+        private final Inventory inventory;
         private final HashMap<Integer, Boolean> equipment;
         private final int XP;
 
@@ -118,7 +119,7 @@ public class Player implements Character {
             this.adventureClassID = adventureClassID;
             this.XP = 0;
             this.equipment = new HashMap<>();
-            this.inventory = new HashMap<>();
+            this.inventory = new Inventory();
             this.statBlock = new StatBlock();
         }
 
@@ -128,16 +129,16 @@ public class Player implements Character {
                     this.equipment.put(15, true); //Iron Helmet (Equipped)
                     this.equipment.put(30, true); //Chain-mail shirt (Equipped)
                     this.equipment.put(7, true); //Rusty Sword
-                    this.inventory.put(2, 5); //5 Throwing knifes
-                    this.inventory.put(0, 2); //2 healing potions
+                    this.inventory.addToInventory(1, 5); //5 Throwing knifes
+                    this.inventory.addToInventory(0, 2); //2 healing potions
                     //IDs are placeholder also could be refactored later
                     break;
                 case 1://Clumsy Thief
                     this.equipment.put(70, true); //Dusty Beret (Equipped)
                     this.equipment.put(9, true); //Leather shirt (Equipped)
                     this.equipment.put(5, true); //Wee Dagger (Equipped)
-                    this.inventory.put(2, 5); //5 Throwing knifes
-                    this.inventory.put(0, 2); //2 healing potions
+                    this.inventory.addToInventory(1, 5); //5 Throwing knifes
+                    this.inventory.addToInventory(0, 2); //2 healing potions
                     break;
                 case 2://Trainee Wizard
                     break;
