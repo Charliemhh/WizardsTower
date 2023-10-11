@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Player implements Character {
 
     private int currentLocation;
@@ -54,6 +56,35 @@ public class Player implements Character {
     @Override
     public int getMaxHP() {
         return maxHP;
+    }
+
+    @Override
+    public int[] getAttackDam() {
+        int[] weapons = this.getEquipment().getEquippedWeapons();
+        int totalDamage = 0;
+        AttackType attackType = AttackType.PHYSICAL;
+        for (int i : weapons) {
+            if (i != 99) {
+                totalDamage += this.getEquipment().effectCheck(i);
+                attackType = this.getEquipment().attackTypeCheck(i);
+                totalDamage += genAttackDam(attackType);
+            }
+        }
+        return new int[]{totalDamage,attackType.getValue()};
+    }
+
+    public int genAttackDam(AttackType type) {
+        switch (type) {
+            case PHYSICAL:
+                return (this.getStatBlock().getStrength()/2);
+            case SARCASTIC:
+                return (this.getStatBlock().getBanter()/2);
+            case BRAINY:
+                return (this.getStatBlock().getBraininess()/2);
+            case SNEAKY:
+                return (this.getStatBlock().getLitheness()/2);
+        }
+        return 0;
     }
 
     public String getName() {

@@ -15,6 +15,10 @@ public class Enemy implements Character {
         return this.currentHP;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void setCurrentHP(int currentHP) {
         this.currentHP = currentHP;
@@ -46,8 +50,8 @@ public class Enemy implements Character {
         }
         return attackDam;
     }
-    public int getAttackDam(){
-        return this.attackDam;
+    public int[] getAttackDam(){
+        return new int[]{this.attackDam};
     }
 
     public Enemy(String name, int maxHPBase, AttackType attackType, int enemyTypeID) {

@@ -46,6 +46,19 @@ public class Equipment {
         }
     }
 
+    public int[] getEquippedWeapons() {
+        int mainHand = 99; //99 indicates empty hands
+        int offHand = 99;
+        for (int id : this.currentlyEquipped.keySet()) {
+            if (this.currentlyEquipped.get(id) == BodySlot.MAINHAND) {
+                mainHand = id;
+            } else if (this.currentlyEquipped.get(id) == BodySlot.OFFHAND) {
+                offHand = id;
+            }
+        }
+        return new int[]{mainHand, offHand};
+    }
+
     public String getEquipmentName(int id) {
         switch (id) {
             case 0:
@@ -110,5 +123,21 @@ public class Equipment {
                 return 0;
         }
         return 0;
+    }
+
+    public AttackType attackTypeCheck(int i) {
+        switch (i){
+            case 2:
+            case 9:
+                return AttackType.PHYSICAL;
+            case 5:
+                return AttackType.SNEAKY;
+            case 6:
+                return AttackType.BRAINY;
+            case 10:
+                return AttackType.SARCASTIC;
+
+        }
+        return null;
     }
 }
