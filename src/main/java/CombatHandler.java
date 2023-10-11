@@ -162,7 +162,7 @@ public class CombatHandler {
         switch (option) {
             case 1:
                 if (!enemies.isEmpty()) {
-                    makeAttack(player, selectTarget());
+                    makeAttack(player, selectTarget(enemies));
                 } else {
                     makeAttack(player, enemy);
                 }
@@ -174,7 +174,12 @@ public class CombatHandler {
                     player.getInventory().seeInventory();
                     i = scanner.nextInt();
                 }
-                player.getInventory().useItem(i - 1, player, enemy);
+                if (!enemies.isEmpty()) {
+                    player.getInventory().useItem(i - 1, player, enemies);
+                } else {
+                    player.getInventory().useItem(i - 1, player, enemy);
+                }
+
         }
 
     }
@@ -187,7 +192,7 @@ public class CombatHandler {
         }
     }
 
-    private Enemy selectTarget() {
+    public static Enemy selectTarget(ArrayList<Enemy> enemies) {
         int i = 1;
         int option = 0;
         Scanner scanner = new Scanner(System.in);

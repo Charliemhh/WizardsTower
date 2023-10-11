@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Inventory {
@@ -25,10 +26,15 @@ public class Inventory {
         playerInventory.put(itemID, newQuantity);//Updates with reduced Quantity
     }
 
+    public void useItem(int itemID, Player player, ArrayList<Enemy> enemies) {
+        int newQuantity = Item.useItem(itemID, playerInventory.get(itemID), player, enemies);
+        playerInventory.put(itemID, newQuantity);//Updates with reduced Quantity
+    }
+
     public void seeInventory() {
         for (int i : playerInventory.keySet()) {
-            int j = i+1;
-            System.out.println(j+":"+Item.getName(i));
+            int j = i + 1;
+            System.out.println(j + ":" + Item.getName(i) + " x " + playerInventory.get(i));
         }
     }
 

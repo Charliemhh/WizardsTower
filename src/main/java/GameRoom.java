@@ -14,6 +14,8 @@ public class GameRoom {
 
     private ArrayList<Integer> trapInRoom; // ID of trap in the room
 
+    private ArrayList<Object> thingsInRoom;
+
     public GameRoom(int roomIndex) {
         this.roomIndex = roomIndex;
     }
@@ -67,5 +69,13 @@ public class GameRoom {
 
     public void setPassageLabels(HashMap<Integer,String> passageLabels) {
         this.passageLabels = passageLabels;
+    }
+
+    public ArrayList<Object> getThingsInRoom() {
+        return thingsInRoom;
+    }
+
+    public void setThingsInRoom(ArrayList<Object> thingsInRoom) {
+        this.thingsInRoom = thingsInRoom;
     }
 }
