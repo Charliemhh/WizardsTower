@@ -15,6 +15,7 @@ public class CombatHandler {
 
 
     public void combatRound(Player player, Enemy enemy) {
+        System.out.println("The "+ enemy.getName() + " lurches towards you, prepare to fight!");
         this.player = player;
         this.enemy = enemy;
         turnOrder = getTurnOrder(player, enemy);
@@ -37,6 +38,7 @@ public class CombatHandler {
     public void combatRound(Player player, ArrayList<Enemy> enemies) {
         this.player = player;
         this.enemies = enemies;
+        System.out.println("The vile forces of darkness lurch towards you, prepare to fight!");
         nameEnemies();
         while (!combatOver) {
             turnOrder = getTurnOrder(player, enemies);
@@ -62,8 +64,8 @@ public class CombatHandler {
             combatOver = true;
         }
         if (!enemies.isEmpty()) {
-            for (Enemy e : enemies) {
-                if (e.getIsDead()) {
+            for (int i = 0; i < enemies.size(); i++) {
+                if (enemies.get(i).getIsDead()) {
                     allEnemiesDeadCheck();
                     if (enemies.isEmpty()){
                         break;
