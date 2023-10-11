@@ -6,9 +6,11 @@ public class Enemy implements Character {
 
     private final int attackDam;
 
-    private final String name;
+    private String name;
 
     private boolean isDead;
+
+    private final AttackType attackType;
 
     @Override
     public int getCurrentHP() {
@@ -19,12 +21,19 @@ public class Enemy implements Character {
         return name;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
     @Override
     public void setCurrentHP(int currentHP) {
         this.currentHP = currentHP;
         if (currentHP <= 0) {
             setDead(true);
         }
+    }
+
+    public AttackType getAttackType() {
+        return this.attackType;
     }
 
     @Override
@@ -50,8 +59,10 @@ public class Enemy implements Character {
         }
         return attackDam;
     }
-    public int[] getAttackDam(){
-        return new int[]{this.attackDam};
+
+    public int[] getAttackDam() {
+        int attackTypeInt = this.attackType.getValue();
+        return new int[]{this.attackDam,attackTypeInt};
     }
 
     public Enemy(String name, int maxHPBase, AttackType attackType, int enemyTypeID) {
@@ -60,6 +71,8 @@ public class Enemy implements Character {
         this.statBlock = new StatBlock();
         this.statBlock.generateEnemyStats(enemyTypeID);
         this.maxHP = maxHPBase + this.statBlock.getPhysique();
+        this.currentHP = this.maxHP;
+        this.attackType = attackType;
         this.attackDam = genAttackDam(attackType);
     }
 

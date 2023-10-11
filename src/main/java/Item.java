@@ -22,9 +22,9 @@ public class Item {
     }
 
 
-    public static int useItem(int itemID, int quantity, Player player) {
+    public static int useItem(int itemID, int quantity, Player player, Enemy enemy) {
         if (quantity > 0) {
-            itemEffect(itemID, player);
+            itemEffect(itemID, player, enemy);
             return quantity - 1;
         } else {
             System.out.println("You are out of stock!");
@@ -32,13 +32,21 @@ public class Item {
         }
     }
 
-    private static void itemEffect(int itemID, Player player) {
+    private static void itemEffect(int itemID, Player player, Enemy enemy) {
         switch (itemID) {
             case 0://Basic Healing Potion
+                System.out.println("You feel yourself become more healthy in a vaguely magical way," +
+                        " it leaves an unpleasant aftertaste in your mouth");
                 player.setCurrentHP(player.getCurrentHP() + 10);
+                System.out.println("Your HP is now "+player.getCurrentHP()+"/"+player.getMaxHP());
                 break;
             case 1://Throwing Knife
-                //Needs combat handler knowledge to work could ask player for target before using?
+                System.out.println("You deftly throw the knife towards your enemy");
+                enemy.setCurrentHP(enemy.getCurrentHP()-3);
+                if (enemy.getCurrentHP() < 0) {
+                    enemy.setCurrentHP(0);
+                }
+                System.out.println("Leaving "+enemy.getName()+" at "+enemy.getCurrentHP()+"/"+enemy.getMaxHP()+"HP");
         }
     }
 }

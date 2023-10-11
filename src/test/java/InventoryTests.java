@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+
 public class InventoryTests {
     @Test
     void canAddToInventory(){
@@ -22,7 +24,7 @@ public class InventoryTests {
                 "test", 0
         ).build();
         testPlayer.setCurrentHP(2);
-        testPlayer.getInventory().useItem(0,testPlayer);
+        testPlayer.getInventory().useItem(0,testPlayer, mock(Enemy.class));
         assertEquals(12,testPlayer.getCurrentHP());
     }
 }

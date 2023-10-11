@@ -20,14 +20,15 @@ public class Inventory {
         playerInventory.remove(itemID);
     }
 
-    public void useItem(int itemID, Player player) {
-        int newQuantity = Item.useItem(itemID, playerInventory.get(itemID), player);
+    public void useItem(int itemID, Player player, Enemy enemy) {
+        int newQuantity = Item.useItem(itemID, playerInventory.get(itemID), player, enemy);
         playerInventory.put(itemID, newQuantity);//Updates with reduced Quantity
     }
 
     public void seeInventory() {
         for (int i : playerInventory.keySet()) {
-            System.out.println(Item.getName(i));
+            int j = i+1;
+            System.out.println(j+":"+Item.getName(i));
         }
     }
 

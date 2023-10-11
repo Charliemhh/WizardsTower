@@ -115,7 +115,7 @@ public class StatBlock {
     public void generateEnemyStats(int enemyTypeID) {
         switch (enemyTypeID) {
             case 0://Bag O'Bones
-                int[] statsBone = {5, 2, 2, 1, 4};
+                int[] statsBone = {6, 2, 2, 1, 4};
                 this.setStats(statsBone);
                 break;
             case 1://Were-chicken

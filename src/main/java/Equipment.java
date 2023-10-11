@@ -87,6 +87,8 @@ public class Equipment {
                 return "Lord of the Things(tm) T-shirt";
             case 12:
                 return "Posh shoes";
+            case 13:
+                return "Robe with holes in";
         }
         return null;
     }
@@ -120,6 +122,8 @@ public class Equipment {
             case 11: //Lord of the Things T-shirt
                 return +1;
             case 12: //Posh shoes
+                return 0;
+            case 13:
                 return 0;
         }
         return 0;

@@ -70,7 +70,7 @@ public class Player implements Character {
                 totalDamage += genAttackDam(attackType);
             }
         }
-        return new int[]{totalDamage,attackType.getValue()};
+        return new int[]{totalDamage,attackType.getValue(),weapons[0]};
     }
 
     public int genAttackDam(AttackType type) {
@@ -173,10 +173,21 @@ public class Player implements Character {
                     this.inventory.addToInventory(0, 2);
                     break;
                 case 2://Trainee Wizard
+                    this.equipment.setCurrentlyEquipped(6,BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(7,BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(13,BodySlot.CHEST);
+                    this.inventory.addToInventory(0,3);
                     break;
                 case 3://Mild-Mannered Accountant
+                    this.equipment.setCurrentlyEquipped(8,BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(9,BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(12,BodySlot.SHOES);
+                    this.inventory.addToInventory(0,3);
                     break;
                 case 4: //Sarcastic so-and-so
+                    this.equipment.setCurrentlyEquipped(10,BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(11,BodySlot.CHEST);
+                    this.inventory.addToInventory(0,3);
                     break;
             }
         }
