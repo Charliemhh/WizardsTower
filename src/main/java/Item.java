@@ -54,7 +54,7 @@ public class Item {
         return itemID;
     }
 
-    public void useItemSingleTarget(Enemy enemy) {
+    public void useItemSingleTarget(Enemy enemy, Player player) {
         if (this.quantity > 0) {
             System.out.println(this.useText);
             enemy.setCurrentHP(enemy.getCurrentHP() - this.effectPower);
@@ -65,10 +65,12 @@ public class Item {
             this.quantity -= 1;
         } else {
             System.out.println("You are out of stock!");
+
         }
+        inventoryCleanUp(player);
     }
 
-    public void useItemSingleTarget(ArrayList<Enemy> enemies) {
+    public void useItemSingleTarget(ArrayList<Enemy> enemies, Player player) {
         if (this.quantity > 0) {
             Enemy enemy = CombatHandler.selectTarget(enemies);
             System.out.println(this.useText);
@@ -82,7 +84,16 @@ public class Item {
         } else {
             System.out.println("You are out of stock!");
         }
+        inventoryCleanUp(player);
     }
+
+    private void inventoryCleanUp(Player player) {
+        if (this.quantity == 0){
+            player.getInventory().removeFromInventory(this.getItemID());
+        }
+    }
+
+
 
     public void useItemCure(Player player) {
         if (this.quantity > 0){
@@ -92,6 +103,7 @@ public class Item {
         else{
             System.out.println("You are out of stock!");
         }
+        inventoryCleanUp(player);
     }
 
     public void useItemHealing(Player player) {
@@ -104,9 +116,10 @@ public class Item {
         else {
             System.out.println("You are out of stock!");
         }
+        inventoryCleanUp(player);
     }
 
-    public void useItemMultiTarget(ArrayList<Enemy> enemies) {
+    public void useItemMultiTarget(ArrayList<Enemy> enemies, Player player) {
         if (this.quantity > 0){
             System.out.println(this.useText);
             for (Enemy enemy: enemies){
@@ -122,10 +135,11 @@ public class Item {
         else {
             System.out.println("You are out of Stock!");
         }
+        inventoryCleanUp(player);
     }
 
-    public void useItemMultiTarget(Enemy enemy) {
-        useItemSingleTarget(enemy);
+    public void useItemMultiTarget(Enemy enemy, Player player) {
+        useItemSingleTarget(enemy,player);
     }
 
     public static Item ItemGen(int itemID, int quantity) {

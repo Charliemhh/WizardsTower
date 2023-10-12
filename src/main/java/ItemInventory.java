@@ -28,13 +28,22 @@ public class ItemInventory {
         }
         return null;
     }
+    public void pickUp(int itemID, int amountFound){
+        if (this.findItem(itemID)!= null){
+            this.findItem(itemID).setQuantity
+                    (this.findItem(itemID).getQuantity()+amountFound);
+        }else{
+            this.addToInventory(itemID,amountFound);
+        }
+
+    }
 
     public void useItem(int itemID, Player player, Enemy enemy) {
         if (findItem(itemID) != null) {
             Item foundItem = findItem(itemID);
-            switch (foundItem.getItemEffectType()){
+            switch (foundItem.getItemEffectType()) {
                 case SINGLETARGET:
-                    foundItem.useItemSingleTarget(enemy);
+                    foundItem.useItemSingleTarget(enemy, player);
                     break;
                 case CURE:
                     foundItem.useItemCure(player);
@@ -43,11 +52,10 @@ public class ItemInventory {
                     foundItem.useItemHealing(player);
                     break;
                 case MULTITARGET:
-                    foundItem.useItemMultiTarget(enemy);
+                    foundItem.useItemMultiTarget(enemy,player);
                     break;
             }
-        }
-        else {
+        } else {
             System.out.println("Item was not found ERROR");
         }
     }
@@ -55,9 +63,9 @@ public class ItemInventory {
     public void useItem(int itemID, Player player, ArrayList<Enemy> enemies) {
         if (findItem(itemID) != null) {
             Item foundItem = findItem(itemID);
-            switch (foundItem.getItemEffectType()){
+            switch (foundItem.getItemEffectType()) {
                 case SINGLETARGET:
-                    foundItem.useItemSingleTarget(enemies);
+                    foundItem.useItemSingleTarget(enemies,player);
                     break;
                 case CURE:
                     foundItem.useItemCure(player);
@@ -66,19 +74,20 @@ public class ItemInventory {
                     foundItem.useItemHealing(player);
                     break;
                 case MULTITARGET:
-                    foundItem.useItemMultiTarget(enemies);
+                    foundItem.useItemMultiTarget(enemies,player);
                     break;
             }
-        }
-        else {
+        } else {
             System.out.println("Item was not found ERROR");
         }
     }
 
     public void seeInventory() {
-        for (int i = 0; i < playerInventory.size();i++){
-            Item item = playerInventory.get(i);
-            System.out.println(i+1 + ":" + item.getName() + " x " + item.getQuantity());
+        for (int i = 0; i < playerInventory.size(); i++) {
+            if (playerInventory.get(i).getQuantity() > 0) {
+                Item item = playerInventory.get(i);
+                System.out.println(i + 1 + ":" + item.getName() + " x " + item.getQuantity());
+            }
         }
     }
 

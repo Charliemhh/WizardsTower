@@ -30,9 +30,9 @@ public class ExplorationHandler {
 
     public void ExplorationStart() {
         currentRoom = getRoom(player.getCurrentLocation());
-        enemyCheck(currentRoom);
         System.out.println("You find yourself in " + currentRoom.getShortDesc());
         while (!player.getIsDead()) {
+            enemyCheck(currentRoom);
             playerOption();
         }
     }
@@ -45,9 +45,11 @@ public class ExplorationHandler {
                     enemies.add(EnemyTypes.generateEnemy(i));
                 }
                 combatHandler.combatRound(player, enemies);
+                currentRoom.getEnemyInRoom().clear();
             } else {
                 Enemy enemy = EnemyTypes.generateEnemy(currentRoom.getEnemyInRoom().get(0));
                 combatHandler.combatRound(player, Objects.requireNonNull(enemy));
+                currentRoom.getEnemyInRoom().clear();
             }
         }
     }
@@ -104,7 +106,23 @@ public class ExplorationHandler {
     }
 
     private void navigate() {
-
+        int option = 909;
+        while (!currentRoom.getPassageLabels().containsKey(option)) {
+            try {
+                System.out.println("Choose a direction:");
+                int i = 1;
+                for (int j : currentRoom.getPassageLabels().keySet()) {
+                    System.out.println(i + " : " + currentRoom.getPassageLabels().get(j));
+                    i++;
+                }
+                option = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                scanner.next();
+            }
+            System.out.println("Please enter a valid option:");
+        }
+        currentRoom = getRoom(player.getCurrentLocation());
+        System.out.println("You find yourself in " + currentRoom.getShortDesc());
     }
 
     private void checkForThings() {

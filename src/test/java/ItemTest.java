@@ -22,4 +22,12 @@ public class ItemTest {
         testPlayer.getInventory().useItem(0,testPlayer,mock(Enemy.class));
         assertEquals(1, testPlayer.getInventory().findItem(0).getQuantity());
     }
+    @Test
+    void itemPickUpWorks(){
+        Player testPlayer = new Player.PlayerBuilder(
+                "test",
+                1).build();
+        testPlayer.getInventory().pickUp(3,5);
+        assertTrue(testPlayer.getInventory().findItem(3).getQuantity()==5);
+    }
 }

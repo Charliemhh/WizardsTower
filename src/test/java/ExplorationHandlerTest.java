@@ -45,16 +45,19 @@ public class ExplorationHandlerTest {
                 passageMap1.put(2,"passage to test room 2");
                 passageMap1.put(3,"passage to test room 3");
                 gameRoom.setPassageLabels(passageMap1);
+                break;
             case 2:
                 var passageMap2 = new HashMap<Integer,String>();
                 passageMap2.put(1,"passage to test room 1");
                 passageMap2.put(3,"passage to test room 3");
                 gameRoom.setPassageLabels(passageMap2);
+                break;
             case 3:
                 var passageMap3 = new HashMap<Integer,String>();
                 passageMap3.put(1,"passage to test room 1");
                 passageMap3.put(2,"passage to test room 2");
                 gameRoom.setPassageLabels(passageMap3);
+                break;
         }
     }
 }
