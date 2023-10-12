@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Player implements Character {
 
     private int currentLocation;
@@ -13,8 +11,8 @@ public class Player implements Character {
     private int playerLevel = 1;
 
     private int maxHP;
-    private final Inventory inventory;
-    private final Equipment equipment;
+    private final ItemInventory inventory;
+    private final EquipmentInventory equipment;
     private final StatBlock statBlock;
     private int XP;
 
@@ -110,11 +108,11 @@ public class Player implements Character {
         this.currentLocation = currentLocation;
     }
 
-    public Inventory getInventory() {
+    public ItemInventory getInventory() {
         return inventory;
     }
 
-    public Equipment getEquipment() {
+    public EquipmentInventory getEquipment() {
         return equipment;
     }
 
@@ -145,8 +143,8 @@ public class Player implements Character {
 
         private final String name;
         private final int adventureClassID;
-        private final Inventory inventory;
-        private final Equipment equipment;
+        private final ItemInventory inventory;
+        private final EquipmentInventory equipment;
         private final int XP;
 
         private final StatBlock statBlock;
@@ -155,43 +153,43 @@ public class Player implements Character {
             this.name = name;
             this.adventureClassID = adventureClassID;
             this.XP = 0;
-            this.equipment = new Equipment();
-            this.inventory = new Inventory();
+            this.equipment = new EquipmentInventory();
+            this.inventory = new ItemInventory();
             this.statBlock = new StatBlock();
         }
 
         public void addDefaultInventoryAndEquipment(int adventureClassID) {
             switch (adventureClassID) {
                 case 0://Squire's Assistant
-                    this.equipment.setCurrentlyEquipped(0, BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(1, BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(2, BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(0, Equipment.BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(1, Equipment.BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(2, Equipment.BodySlot.MAINHAND);
                     this.inventory.addToInventory(0, 2);
                     this.inventory.addToInventory(1, 5);
                     break;
                 case 1://Clumsy Thief
-                    this.equipment.setCurrentlyEquipped(3, BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(4, BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(5, BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(3, Equipment.BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(4, Equipment.BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(5, Equipment.BodySlot.MAINHAND);
                     this.inventory.addToInventory(0, 2);
                     this.inventory.addToInventory(1, 5);
                     break;
                 case 2://Trainee Wizard
-                    this.equipment.setCurrentlyEquipped(6,BodySlot.MAINHAND);
-                    this.equipment.setCurrentlyEquipped(7,BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(13,BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(6, Equipment.BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(7, Equipment.BodySlot.HEAD);
+                    this.equipment.setCurrentlyEquipped(13, Equipment.BodySlot.CHEST);
                     this.inventory.addToInventory(0,3);
                     break;
                 case 3://Mild-Mannered Accountant
-                    this.equipment.setCurrentlyEquipped(8,BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(9,BodySlot.MAINHAND);
-                    this.equipment.setCurrentlyEquipped(12,BodySlot.SHOES);
+                    this.equipment.setCurrentlyEquipped(8, Equipment.BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(9, Equipment.BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(12, Equipment.BodySlot.SHOES);
                     this.inventory.addToInventory(0,3);
                     this.inventory.addToInventory(2,1);
                     break;
                 case 4: //Sarcastic so-and-so
-                    this.equipment.setCurrentlyEquipped(10,BodySlot.MAINHAND);
-                    this.equipment.setCurrentlyEquipped(11,BodySlot.CHEST);
+                    this.equipment.setCurrentlyEquipped(10, Equipment.BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(11, Equipment.BodySlot.CHEST);
                     this.inventory.addToInventory(0,3);
                     this.inventory.addToInventory(3,2);
                     break;

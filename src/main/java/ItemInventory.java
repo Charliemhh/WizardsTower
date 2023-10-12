@@ -1,12 +1,10 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
 
-public class Inventory {
+public class ItemInventory {
 
     private final ArrayList<Item> playerInventory;
 
-    public Inventory() {
+    public ItemInventory() {
         this.playerInventory = new ArrayList<>();
     }
 

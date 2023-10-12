@@ -13,7 +13,7 @@ public class EquipmentTests {
 
     @Test
     void canPlayerEquipNewEquipment() {
-        testPlayer.getEquipment().setCurrentlyEquipped(12, BodySlot.SHOES);
+        testPlayer.getEquipment().setCurrentlyEquipped(12, Equipment.BodySlot.SHOES);
         assertTrue(testPlayer.getEquipment().getCurrentlyEquipped().containsKey(12));
     }
 
@@ -39,19 +39,19 @@ public class EquipmentTests {
 
     @Test
     void playerCannotEquipTwoOfTheSameBodySlot() {
-        testPlayer.getEquipment().setCurrentlyEquipped(0, BodySlot.HEAD);
+        testPlayer.getEquipment().setCurrentlyEquipped(0, Equipment.BodySlot.HEAD);
         assertFalse(testPlayer.getEquipment().getCurrentlyEquipped().containsKey(0));
     }
 
     @Test
     void playerCanAddEquipmentToInventory() {
-        testPlayer.getEquipment().addToEquipmentInventory(11, BodySlot.CHEST);
+        testPlayer.getEquipment().addToEquipmentInventory(11, Equipment.BodySlot.CHEST);
         assertTrue(testPlayer.getEquipment().getEquipmentInventory().containsKey(11));
     }
 
     @Test
     void cannotAddDuplicateEquipment() {
-        testPlayer.getEquipment().addToEquipmentInventory(3, BodySlot.HEAD);
+        testPlayer.getEquipment().addToEquipmentInventory(3, Equipment.BodySlot.HEAD);
         assertFalse(testPlayer.getEquipment().getEquipmentInventory().containsKey(3));
     }
 }

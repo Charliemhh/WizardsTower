@@ -1,147 +1,96 @@
-import java.util.HashMap;
-
 public class Equipment {
 
-    private final HashMap<Integer, BodySlot> currentlyEquipped;
 
-    private final HashMap<Integer, BodySlot> equipmentInventory;
 
-    public Equipment() {
-        this.currentlyEquipped = new HashMap<>();
-        this.equipmentInventory = new HashMap<>();
+
+    public enum BodySlot {
+        HEAD, CHEST, MAINHAND, OFFHAND, PANTS, SHOES, ARMS;
     }
 
-    public void setCurrentlyEquipped(int equipmentID, BodySlot bodySlot) {
-        if (!this.currentlyEquipped.containsValue(bodySlot)) {
-            this.currentlyEquipped.put(equipmentID, bodySlot);
-            this.equipmentInventory.remove(equipmentID);
-        } else {
-            System.out.println("That slot is already occupied!");
-        }
+    public enum EquipmentEffectType {
+        DEFENCEBUFF, ATTACKBUFF, STATBUFF, NOBUFF;
     }
 
-    public HashMap<Integer, BodySlot> getCurrentlyEquipped() {
-        return currentlyEquipped;
+    private final BodySlot bodySlot;
+
+    private final EquipmentEffectType effectType;
+
+    private AttackType attackType;
+
+    private final int effectPower;
+
+    private final int equipmentID;
+
+    private final String name;
+
+    private final String examineText;
+
+    public Equipment(int equipmentID, BodySlot bodySlot, EquipmentEffectType effectType, AttackType attackType, int effectPower, String name, String examineText) {
+        this.bodySlot = bodySlot;
+        this.effectType = effectType;
+        this.attackType = attackType;
+        this.effectPower = effectPower;
+        this.equipmentID = equipmentID;
+        this.name = name;
+        this.examineText = examineText;
     }
 
-    public HashMap<Integer, BodySlot> getEquipmentInventory() {
-        return equipmentInventory;
+    public BodySlot getBodySlot() {
+        return bodySlot;
     }
 
-    public void removeCurrentEquipment(int equipmentID) {
-        this.equipmentInventory.put(equipmentID, this.currentlyEquipped.remove(equipmentID));
+    public EquipmentEffectType getEffectType() {
+        return effectType;
     }
 
-    public void addToEquipmentInventory(int equipmentID, BodySlot bodySlot) {
-        if (!this.currentlyEquipped.containsKey(equipmentID) && !this.equipmentInventory.containsKey(equipmentID)) {
-            this.equipmentInventory.put(equipmentID, bodySlot);
-        } else {
-            System.out.println("You already have this piece of equipment!");
-        }
+    public int getEffectPower() {
+        return effectPower;
+    }
+    public int getEquipmentID() {
+        return equipmentID;
     }
 
-    public void getEquippedItems() {
-        for (int id : this.currentlyEquipped.keySet()) {
-            System.out.println("Slot: " + this.currentlyEquipped.get(id) + "  Name: " + getEquipmentName(id));
-        }
+    public String getName() {
+        return name;
     }
 
-    public int[] getEquippedWeapons() {
-        int mainHand = 99; //99 indicates empty hands
-        int offHand = 99;
-        for (int id : this.currentlyEquipped.keySet()) {
-            if (this.currentlyEquipped.get(id) == BodySlot.MAINHAND) {
-                mainHand = id;
-            } else if (this.currentlyEquipped.get(id) == BodySlot.OFFHAND) {
-                offHand = id;
-            }
-        }
-        return new int[]{mainHand, offHand};
+    public String getExamineText() {
+        return examineText;
     }
 
-    public String getEquipmentName(int id) {
-        switch (id) {
-            case 0:
-                return "Iron Helmet";
-            case 1:
-                return "Chain-Mail Shirt";
-            case 2:
-                return "Rusty Sword";
-            case 3:
-                return "Dusty Beret";
-            case 4:
-                return "Leather Shirt";
-            case 5:
-                return "Wee Dagger";
-            case 6:
-                return "Hand-me-Down Staff";
-            case 7:
-                return "Off-brand Wizard's hat";
-            case 8:
-                return "Normal Suit";
-            case 9:
-                return "Briefcase";
-            case 10:
-                return "Sarcasm Bat";
-            case 11:
-                return "Lord of the Things(tm) T-shirt";
-            case 12:
-                return "Posh shoes";
-            case 13:
-                return "Robe with holes in";
-        }
-        return null;
+    public AttackType getAttackType() {
+        return attackType;
     }
 
-    public int effectCheck(int equipmentID) {
-        //The logic of where the numerical effects go will be handled in combat handler.
-        //As well as loop through current equipment
+    public void setAttackType(AttackType attackType) {
+        this.attackType = attackType;
+    }
+
+    public static Equipment EquipmentGen(int equipmentID) {
         switch (equipmentID) {
-            case 0: //Iron Helmet
-                return -1;
-            case 1: //Chain-Mail Shirt
-                return -2;
-            case 2: //Rusty Sword
-                return +0;
-            case 3://Dusty Beret
-                return +1;
-            case 4://Leather Shirt
-                return -1;
-            case 5://Wee Dagger
-                return +2;
-            case 6://Hand-me-Down Staff
-                return +1;
-            case 7://Off-brand Wizard's hat
-                return +1;
-            case 8://Normal Suit
-                return 0;
-            case 9://Briefcase
-                return +1;
-            case 10://Sarcasm Bat
-                return +2;
-            case 11: //Lord of the Things T-shirt
-                return +1;
-            case 12: //Posh shoes
-                return 0;
-            case 13:
-                return 0;
-        }
-        return 0;
-    }
-
-    public AttackType attackTypeCheck(int i) {
-        switch (i){
+            case 0:
+                return new Equipment(0, BodySlot.HEAD,
+                        EquipmentEffectType.DEFENCEBUFF, null, 2, "Iron Helmet",
+                        "Its a rusty hand-me-down, but it might save your life.");
+            case 1:
+                return new Equipment(1, BodySlot.CHEST,
+                        EquipmentEffectType.DEFENCEBUFF, null, 1, "Chain-Mail Shirt",
+                        "It's heavy, makes you sweat and makes it hard to breathe.");
             case 2:
-            case 9:
-                return AttackType.PHYSICAL;
+                return new Equipment(2, BodySlot.MAINHAND, EquipmentEffectType.ATTACKBUFF, AttackType.PHYSICAL,
+                        0, "Rusty Sword", "You might as well nicely ask the enemies to start bleeding.");
+            case 3:
+                return new Equipment(3, BodySlot.HEAD, EquipmentEffectType.DEFENCEBUFF, null,
+                        1, "Dusty Beret", "It's not as cool looking as you think");
+            case 4:
+                return new Equipment(4, BodySlot.CHEST, EquipmentEffectType.DEFENCEBUFF, null,
+                        1, "Leather Shirt", "It still stinks of beer from the last hero who wore it.");
             case 5:
-                return AttackType.SNEAKY;
-            case 6:
-                return AttackType.BRAINY;
-            case 10:
-                return AttackType.SARCASTIC;
-
+                return new Equipment(5, BodySlot.MAINHAND, EquipmentEffectType.ATTACKBUFF,
+                        AttackType.PHYSICAL, 2, "Wee Dagger",
+                        "Stick 'em with the pointy end");
         }
         return null;
     }
+
 }
