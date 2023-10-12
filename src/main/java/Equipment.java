@@ -89,6 +89,33 @@ public class Equipment {
                 return new Equipment(5, BodySlot.MAINHAND, EquipmentEffectType.ATTACKBUFF,
                         AttackType.PHYSICAL, 2, "Wee Dagger",
                         "Stick 'em with the pointy end");
+            case 6:
+                return new Equipment(6,BodySlot.MAINHAND,EquipmentEffectType.ATTACKBUFF,
+                        AttackType.BRAINY,2,"Hand-me-down Staff",
+                        "Its more of a self-confident twig than a staff");
+            case 7:
+                return new Equipment(7,BodySlot.HEAD,EquipmentEffectType.NOBUFF,null,
+                        0,"Off-brand Wizard's hat",
+                        "Your mum said it was cool once.");
+            case 8:
+                return new Equipment(8,BodySlot.CHEST,EquipmentEffectType.DEFENCEBUFF,null,2,
+                        "Normal Suit","Freshly Ironed, smells like success");
+            case 9:
+                return new Equipment(9,BodySlot.MAINHAND,EquipmentEffectType.ATTACKBUFF,AttackType.PHYSICAL,
+                        3,"Briefcase","Contains all your documents for handling monster killing-based legal matters.");
+            case 10:
+                return new Equipment(10,BodySlot.MAINHAND,EquipmentEffectType.ATTACKBUFF,AttackType.SARCASTIC,2
+                ,"Sarcasm Bat","Its a purely metaphorical bat, similar to a sharp wit");
+            case 11:
+                return new Equipment(11,BodySlot.CHEST,EquipmentEffectType.DEFENCEBUFF,null,2,
+                        "Lord of the Things(tm)","This shirt displays to all you that you are a wellspring of movie trivia");
+            case 12:
+                return new Equipment(12,BodySlot.SHOES,EquipmentEffectType.DEFENCEBUFF,null,1,
+                        "Posh Shoes"
+                        ,"Surprisingly clean considering you've been walking through a monster filled tower");
+            case 13:
+                return new Equipment(13,BodySlot.CHEST,EquipmentEffectType.DEFENCEBUFF,null,2,
+                        "Robe with holes in","At least it's comfortable to wear...");
         }
         return null;
     }

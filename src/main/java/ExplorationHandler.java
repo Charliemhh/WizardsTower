@@ -88,9 +88,9 @@ public class ExplorationHandler {
                 player.getInventory().seeInventory();//for now should have ability to use.
                 break;
             case 5:
-                for (int i : player.getEquipment().getEquipmentInventory().keySet()) {
-                    System.out.println("Slot: " + player.getEquipment().getEquipmentInventory().get(i)
-                            + "  Name: " + player.getEquipment().getEquipmentName(i));
+                for (Equipment e : player.getEquipment().getEquipmentInventory()) {
+                    System.out.println("Slot: " + e.getBodySlot()
+                            + "  Name: " + e.getName());
                 }
                 break;
             case 6:

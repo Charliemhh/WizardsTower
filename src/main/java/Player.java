@@ -60,29 +60,42 @@ public class Player implements Character {
 
     @Override
     public int[] getAttackDam() {
-        int[] weapons = this.getEquipment().getEquippedWeapons();
         int totalDamage = 0;
-        AttackType attackType = AttackType.PHYSICAL;
-        for (int i : weapons) {
-            if (i != 99) {
-                totalDamage += this.getEquipment().effectCheck(i);
-                attackType = this.getEquipment().attackTypeCheck(i);
-                totalDamage += genAttackDam(attackType);
+        AttackType mainHandAttackType = AttackType.PHYSICAL;
+        int mainHandEquipmentID = 2;
+        for (Equipment e : this.getEquipment().getCurrentlyEquipped()) {
+            if (e.getBodySlot() == Equipment.BodySlot.MAINHAND) {
+                totalDamage += e.getEffectPower();
+                mainHandAttackType = e.getAttackType();
+                mainHandEquipmentID = e.getEquipmentID();
+            }else if(e.getBodySlot() == Equipment.BodySlot.OFFHAND){
+                totalDamage += e.getEffectPower();
             }
         }
-        return new int[]{totalDamage,attackType.getValue(),weapons[0]};
+        totalDamage += this.genAttackDam(mainHandAttackType);
+        return new int[]{totalDamage,mainHandAttackType.getValue(), mainHandEquipmentID,};
+    }
+
+    public int getDefenceBonus(){
+        int totalreduction = 0;
+        for (Equipment e: this.getEquipment().getCurrentlyEquipped()){
+            if (e.getEffectType()== Equipment.EquipmentEffectType.DEFENCEBUFF){
+                totalreduction += e.getEffectPower();
+            }
+        }
+        return  totalreduction;
     }
 
     public int genAttackDam(AttackType type) {
         switch (type) {
             case PHYSICAL:
-                return (this.getStatBlock().getStrength()/2);
+                return (this.getStatBlock().getStrength() / 2);
             case SARCASTIC:
-                return (this.getStatBlock().getBanter()/2);
+                return (this.getStatBlock().getBanter() / 2);
             case BRAINY:
-                return (this.getStatBlock().getBraininess()/2);
+                return (this.getStatBlock().getBraininess() / 2);
             case SNEAKY:
-                return (this.getStatBlock().getLitheness()/2);
+                return (this.getStatBlock().getLitheness() / 2);
         }
         return 0;
     }
@@ -161,37 +174,37 @@ public class Player implements Character {
         public void addDefaultInventoryAndEquipment(int adventureClassID) {
             switch (adventureClassID) {
                 case 0://Squire's Assistant
-                    this.equipment.setCurrentlyEquipped(0, Equipment.BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(1, Equipment.BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(2, Equipment.BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(0));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(1));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(2));
                     this.inventory.addToInventory(0, 2);
                     this.inventory.addToInventory(1, 5);
                     break;
                 case 1://Clumsy Thief
-                    this.equipment.setCurrentlyEquipped(3, Equipment.BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(4, Equipment.BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(5, Equipment.BodySlot.MAINHAND);
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(3));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(4));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(5));
                     this.inventory.addToInventory(0, 2);
                     this.inventory.addToInventory(1, 5);
                     break;
                 case 2://Trainee Wizard
-                    this.equipment.setCurrentlyEquipped(6, Equipment.BodySlot.MAINHAND);
-                    this.equipment.setCurrentlyEquipped(7, Equipment.BodySlot.HEAD);
-                    this.equipment.setCurrentlyEquipped(13, Equipment.BodySlot.CHEST);
-                    this.inventory.addToInventory(0,3);
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(6));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(7));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(13));
+                    this.inventory.addToInventory(0, 3);
                     break;
                 case 3://Mild-Mannered Accountant
-                    this.equipment.setCurrentlyEquipped(8, Equipment.BodySlot.CHEST);
-                    this.equipment.setCurrentlyEquipped(9, Equipment.BodySlot.MAINHAND);
-                    this.equipment.setCurrentlyEquipped(12, Equipment.BodySlot.SHOES);
-                    this.inventory.addToInventory(0,3);
-                    this.inventory.addToInventory(2,1);
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(8));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(9));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(12));
+                    this.inventory.addToInventory(0, 3);
+                    this.inventory.addToInventory(2, 1);
                     break;
                 case 4: //Sarcastic so-and-so
-                    this.equipment.setCurrentlyEquipped(10, Equipment.BodySlot.MAINHAND);
-                    this.equipment.setCurrentlyEquipped(11, Equipment.BodySlot.CHEST);
-                    this.inventory.addToInventory(0,3);
-                    this.inventory.addToInventory(3,2);
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(10));
+                    this.equipment.setCurrentlyEquipped(Equipment.EquipmentGen(11));
+                    this.inventory.addToInventory(0, 3);
+                    this.inventory.addToInventory(3, 2);
                     break;
             }
         }

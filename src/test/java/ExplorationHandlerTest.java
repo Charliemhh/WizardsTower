@@ -6,7 +6,7 @@ public class ExplorationHandlerTest {
         Player testPlayer = new Player.PlayerBuilder(
                 "Test",
                 0).build();
-        testPlayer.getEquipment().addToEquipmentInventory(5, Equipment.BodySlot.MAINHAND);
+        testPlayer.getEquipment().addToEquipmentInventory(Equipment.EquipmentGen(5));
         int[][] connections = {{1, 2}, {0, 2}, {0, 1}};
         GameMap testMap = new GameMap(3, connections);
         GameRoom testRoom1 = new GameRoom(0);

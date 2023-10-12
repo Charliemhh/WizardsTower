@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class EquipmentInventory {
 
@@ -13,14 +12,25 @@ public class EquipmentInventory {
     }
 
     public void setCurrentlyEquipped(Equipment equipment) {
-        for (Equipment e : this.currentlyEquipped) {
-            if (!(e.getBodySlot() == equipment.getBodySlot())) {
+        boolean alreadyEquipped = false;
+        if (this.currentlyEquipped.contains(equipment)) {
+            System.out.println("That slot is already occupied!");
+        } else {
+            if (this.currentlyEquipped.size() == 0) {
                 this.currentlyEquipped.add(equipment);
-                if (equipmentInventory.contains(equipment)) {
-                    this.equipmentInventory.remove(equipment);
-                }
             } else {
-                System.out.println("That slot is already occupied!");
+                for (int i = 0; i < this.currentlyEquipped.size(); i++) {
+                    if ((currentlyEquipped.get(i).getBodySlot() == equipment.getBodySlot())) {
+                        alreadyEquipped = true;
+                        break;
+                    }
+                }
+                if (!alreadyEquipped) {
+                    this.currentlyEquipped.add(equipment);
+                    if (equipmentInventory.contains(equipment)) {
+                        this.equipmentInventory.remove(equipment);
+                    }
+                }
             }
         }
     }
@@ -44,18 +54,18 @@ public class EquipmentInventory {
         }
     }
 
-    public void addToEquipmentInventory(int equipmentID) {
-        if (!this.currentlyEquipped.contains(findEquipment(equipmentID, currentlyEquipped))
-                && !this.equipmentInventory.contains(findEquipment(equipmentID, equipmentInventory))) {
-            this.equipmentInventory.add(findEquipment(equipmentID, currentlyEquipped));
+    public void addToEquipmentInventory(Equipment equipment) {
+        if (!this.currentlyEquipped.contains(findEquipment(equipment, currentlyEquipped))
+                && !this.equipmentInventory.contains(findEquipment(equipment, equipmentInventory))) {
+            this.equipmentInventory.add(equipment);
         } else {
             System.out.println("You already have this piece of equipment!");
         }
     }
 
-    private Equipment findEquipment(int equipmentID, ArrayList<Equipment> equipmentInventory) {
+    public Equipment findEquipment(Equipment equipment, ArrayList<Equipment> equipmentInventory) {
         for (Equipment e : equipmentInventory) {
-            if (e.getEquipmentID() == equipmentID) {
+            if (e.getEquipmentID() == equipment.getEquipmentID()) {
                 return e;
             }
         }
@@ -63,25 +73,13 @@ public class EquipmentInventory {
     }
 
     public void getEquippedItems() {
-        for (int id : this.currentlyEquipped.keySet()) {
-            System.out.println("Slot: " + this.currentlyEquipped.get(id) + "  Name: " + getEquipmentName(id));
+        for (Equipment e : this.currentlyEquipped) {
+            System.out.println("Slot: " + e.getBodySlot() + "  Name: " + e.getName());
         }
     }
 
-    public int[] getEquippedWeapons() {
-        int mainHand = 99; //99 indicates empty hands
-        int offHand = 99;
-        for (int id : this.currentlyEquipped.keySet()) {
-            if (this.currentlyEquipped.get(id) == Equipment.BodySlot.MAINHAND) {
-                mainHand = id;
-            } else if (this.currentlyEquipped.get(id) == Equipment.BodySlot.OFFHAND) {
-                offHand = id;
-            }
-        }
-        return new int[]{mainHand, offHand};
-    }
 
-    public String getEquipmentName(int id) {
+    public static String getEquipmentName(int id) {
         switch (id) {
             case 0:
                 return "Iron Helmet";

@@ -15,7 +15,7 @@ public class CombatHandler {
 
 
     public void combatRound(Player player, Enemy enemy) {
-        System.out.println("The "+ enemy.getName() + " lurches towards you, prepare to fight!");
+        System.out.println("The " + enemy.getName() + " lurches towards you, prepare to fight!");
         this.player = player;
         this.enemy = enemy;
         turnOrder = getTurnOrder(player, enemy);
@@ -67,7 +67,7 @@ public class CombatHandler {
             for (int i = 0; i < enemies.size(); i++) {
                 if (enemies.get(i).getIsDead()) {
                     allEnemiesDeadCheck();
-                    if (enemies.isEmpty()){
+                    if (enemies.isEmpty()) {
                         break;
                     }
                 }
@@ -77,7 +77,7 @@ public class CombatHandler {
             if (enemy.getIsDead()) {
                 System.out.println("The " + enemy.getName() + " dies, victory is yours!");
                 player.addXP(enemy.getRewardXP());
-                System.out.println("You gain "+ enemy.getRewardXP()+"XP!\n");
+                System.out.println("You gain " + enemy.getRewardXP() + "XP!\n");
                 combatOver = true;
             }
         }
@@ -92,7 +92,7 @@ public class CombatHandler {
             if (e.getIsDead()) {
                 System.out.println("The " + e.getName() + " dies");
                 player.addXP(e.getRewardXP());
-                System.out.println("You gain "+ e.getRewardXP()+"XP!\n");
+                System.out.println("You gain " + e.getRewardXP() + "XP!\n");
                 deadList[i] = true;
                 deadToRemove = e;
             } else {
@@ -113,15 +113,17 @@ public class CombatHandler {
 
     private void makeAttack(Character attacker, Character target) {
         if (attacker.getClass() == Player.class) {
-            String weapon = ((Player) attacker).getEquipment().getEquipmentName(attacker.getAttackDam()[2]);
-            System.out.println(attacker.getName() + getAttackFlavor(attacker.getAttackDam()[1]) +
-                    target.getName() + " with their " + weapon +
-                    " for " + attacker.getAttackDam()[0] + " damage!");
+            int[] attackResults = attacker.getAttackDam();
+            String mainWeapon = EquipmentInventory.getEquipmentName(attackResults[2]);
+            System.out.println(attacker.getName() + getAttackFlavor(attackResults[1]) +
+                    target.getName() + " with their " + mainWeapon +
+                    " for " + attackResults[0] + " damage!");
+            target.setCurrentHP(target.getCurrentHP() - (attacker.getAttackDam()[0]));
         } else {
             System.out.println(attacker.getName() + getAttackFlavor(attacker.getAttackDam()[1]) +
-                    target.getName() + " for " + attacker.getAttackDam()[0] + " damage!");
+                    target.getName() + " for " + (attacker.getAttackDam()[0] - player.getDefenceBonus()) + " damage!");
+            target.setCurrentHP(target.getCurrentHP() - (attacker.getAttackDam()[0] - player.getDefenceBonus()));
         }
-        target.setCurrentHP(target.getCurrentHP() - attacker.getAttackDam()[0]);
         if (target.getCurrentHP() < 0) {
             target.setCurrentHP(0);
         }
@@ -173,12 +175,18 @@ public class CombatHandler {
                 break;
             case 2:
                 int i = 0;
-                while (!(player.getInventory().findItem(i) == null )&& (i == 0)) {
-                    System.out.println("Choose an item to use:");
-                    player.getInventory().seeInventory();
-                    i = scanner.nextInt();
+                while (!(player.getInventory().findItem(i) == null) && (i == 0)) {
+                    try {
+                        i = 0;
+                        System.out.println("Choose an item to use:");
+                        player.getInventory().seeInventory();
+                        i = scanner.nextInt();
+                    }catch (InputMismatchException e){
+                        System.out.println("Please select a valid option!");
+                        scanner.next();
+                    }
                 }
-                Item selectedItem = player.getInventory().getPlayerInventory().get(i-1);
+                Item selectedItem = player.getInventory().getPlayerInventory().get(i - 1);
                 if (!enemies.isEmpty()) {
                     player.getInventory().useItem(selectedItem.getItemID(), player, enemies);
                 } else {
