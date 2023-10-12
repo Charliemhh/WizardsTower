@@ -4,6 +4,8 @@ public class Enemy implements Character {
     private int currentHP;
     private final StatBlock statBlock;
 
+    private final int rewardXP;
+
     private final int attackDam;
 
     private String name;
@@ -65,8 +67,9 @@ public class Enemy implements Character {
         return new int[]{this.attackDam,attackTypeInt};
     }
 
-    public Enemy(String name, int maxHPBase, AttackType attackType, int enemyTypeID) {
+    public Enemy(String name, int maxHPBase, AttackType attackType, int enemyTypeID, int rewardXP) {
         this.name = name;
+        this.rewardXP = rewardXP;
         this.isDead = false;
         this.statBlock = new StatBlock();
         this.statBlock.generateEnemyStats(enemyTypeID);
@@ -82,5 +85,9 @@ public class Enemy implements Character {
 
     public void setDead(boolean dead) {
         isDead = dead;
+    }
+
+    public int getRewardXP() {
+        return rewardXP;
     }
 }

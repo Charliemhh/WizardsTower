@@ -10,6 +10,8 @@ public class Player implements Character {
 
     private int currentHP;
 
+    private int playerLevel = 1;
+
     private int maxHP;
     private final Inventory inventory;
     private final Equipment equipment;
@@ -121,6 +123,8 @@ public class Player implements Character {
         while (this.XP >= 100) {
             this.XP = (this.XP - 100);
             levelUp();
+            this.playerLevel += 1;
+            System.out.println("Your level has increased! you are now level " + this.playerLevel);
         }
     }
 
@@ -162,15 +166,15 @@ public class Player implements Character {
                     this.equipment.setCurrentlyEquipped(0, BodySlot.HEAD);
                     this.equipment.setCurrentlyEquipped(1, BodySlot.CHEST);
                     this.equipment.setCurrentlyEquipped(2, BodySlot.MAINHAND);
-                    this.inventory.addToInventory(1, 5);
                     this.inventory.addToInventory(0, 2);
+                    this.inventory.addToInventory(1, 5);
                     break;
                 case 1://Clumsy Thief
                     this.equipment.setCurrentlyEquipped(3, BodySlot.HEAD);
                     this.equipment.setCurrentlyEquipped(4, BodySlot.CHEST);
                     this.equipment.setCurrentlyEquipped(5, BodySlot.MAINHAND);
-                    this.inventory.addToInventory(1, 5);
                     this.inventory.addToInventory(0, 2);
+                    this.inventory.addToInventory(1, 5);
                     break;
                 case 2://Trainee Wizard
                     this.equipment.setCurrentlyEquipped(6,BodySlot.MAINHAND);
@@ -183,11 +187,13 @@ public class Player implements Character {
                     this.equipment.setCurrentlyEquipped(9,BodySlot.MAINHAND);
                     this.equipment.setCurrentlyEquipped(12,BodySlot.SHOES);
                     this.inventory.addToInventory(0,3);
+                    this.inventory.addToInventory(2,1);
                     break;
                 case 4: //Sarcastic so-and-so
                     this.equipment.setCurrentlyEquipped(10,BodySlot.MAINHAND);
                     this.equipment.setCurrentlyEquipped(11,BodySlot.CHEST);
                     this.inventory.addToInventory(0,3);
+                    this.inventory.addToInventory(3,2);
                     break;
             }
         }

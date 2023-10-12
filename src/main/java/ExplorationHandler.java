@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ExplorationHandler {
@@ -29,8 +30,8 @@ public class ExplorationHandler {
 
     public void ExplorationStart() {
         currentRoom = getRoom(player.getCurrentLocation());
-        System.out.println("You find yourself in " + currentRoom.getShortDesc());
         enemyCheck(currentRoom);
+        System.out.println("You find yourself in " + currentRoom.getShortDesc());
         while (!player.getIsDead()) {
             playerOption();
         }
@@ -44,6 +45,9 @@ public class ExplorationHandler {
                     enemies.add(EnemyTypes.generateEnemy(i));
                 }
                 combatHandler.combatRound(player, enemies);
+            } else {
+                Enemy enemy = EnemyTypes.generateEnemy(currentRoom.getEnemyInRoom().get(0));
+                combatHandler.combatRound(player, Objects.requireNonNull(enemy));
             }
         }
     }

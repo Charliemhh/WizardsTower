@@ -6,7 +6,7 @@ public class CombatHandlerTesting {
         CombatHandler combatHandler = new CombatHandler();
         Player testPlayer = new Player.PlayerBuilder(
                 "Test",
-                0).build();
+                4).build();
         Enemy testenemy = EnemyTypes.generateEnemy(0);
         Enemy testEnemy2 = EnemyTypes.generateEnemy(0);
         ArrayList<Enemy> enemies = new ArrayList<>();

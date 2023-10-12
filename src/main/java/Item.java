@@ -3,80 +3,155 @@ import java.util.ArrayList;
 public class Item {
 
 
-    public static String getName(int itemID) {
-        switch (itemID) {
-            case 0:
-                return "Health Potion";
-            case 1:
-                return "Throwing Knife";
-        }
-        return "Item Not Found";
+    public enum ItemEffectType {
+        HEALING, SINGLETARGET, MULTITARGET, CURE;
+
+    }
+    //Let the refactoring commence!
+
+    private final String name;
+    private final String examineText;
+    private final String useText;
+
+    private final ItemEffectType itemEffectType;
+    private final int effectPower;
+    private final int itemID;
+    private int quantity;
+
+
+    public Item(int itemID, String name, String examineText, String useText, ItemEffectType effectType, int effectPower, int quantity) {
+        this.itemID = itemID;
+        this.name = name;
+        this.examineText = examineText;
+        this.useText = useText;
+        this.itemEffectType = effectType;
+        this.effectPower = effectPower;
+        this.quantity = quantity;
     }
 
-    public static String getDesc(int itemID) {
-        switch (itemID) {
-            case 0:
-                return "A burbling flask of ominously sweet liquid, restores your health.";
-            case 1:
-                return "Throwing these shards of jagged metal makes you feel both dangerous and cool.";
-        }
-        return "Item Not Found";
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getExamineText() {
+        return examineText;
+    }
+
+    public ItemEffectType getItemEffectType() {
+        return itemEffectType;
     }
 
 
-    public static int useItem(int itemID, int quantity, Player player, Enemy enemy) {
-        if (quantity > 0) {
-            itemEffect(itemID, player, enemy);
-            return quantity - 1;
+    public int getItemID() {
+        return itemID;
+    }
+
+    public void useItemSingleTarget(Enemy enemy) {
+        if (this.quantity > 0) {
+            System.out.println(this.useText);
+            enemy.setCurrentHP(enemy.getCurrentHP() - this.effectPower);
+            if (enemy.getCurrentHP() < 0) {
+                enemy.setCurrentHP(0);
+            }
+            System.out.println("Leaving " + enemy.getName() + " at " + enemy.getCurrentHP() + "/" + enemy.getMaxHP() + "HP");
+            this.quantity -= 1;
         } else {
             System.out.println("You are out of stock!");
-            return quantity;
-        }
-    }
-    public static int useItem(int itemID, int quantity, Player player, ArrayList<Enemy> enemies) {
-        if (quantity > 0) {
-            itemEffect(itemID, player, enemies);
-            return quantity - 1;
-        } else {
-            System.out.println("You are out of stock!");
-            return quantity;
         }
     }
 
-    private static void itemEffect(int itemID, Player player, ArrayList<Enemy> enemies) {
-        switch (itemID) {
-            case 0://Basic Healing Potion
-                System.out.println("You feel yourself become more healthy in a vaguely magical way," +
-                        " it leaves an unpleasant aftertaste in your mouth");
-                player.setCurrentHP(player.getCurrentHP() + 10);
-                System.out.println("Your HP is now "+player.getCurrentHP()+"/"+player.getMaxHP());
-                break;
-            case 1://Throwing Knife
-                Enemy enemy = CombatHandler.selectTarget(enemies);
-                System.out.println("You deftly throw the knife towards your enemy");
-                enemy.setCurrentHP(enemy.getCurrentHP()-3);
+    public void useItemSingleTarget(ArrayList<Enemy> enemies) {
+        if (this.quantity > 0) {
+            Enemy enemy = CombatHandler.selectTarget(enemies);
+            System.out.println(this.useText);
+            enemy.setCurrentHP(enemy.getCurrentHP() - this.effectPower);
+            if (enemy.getCurrentHP() < 0) {
+                enemy.setCurrentHP(0);
+            }
+            System.out.println("Leaving " + enemy.getName() +
+                    " at " + enemy.getCurrentHP() + "/" + enemy.getMaxHP() + "HP");
+            this.quantity -= 1;
+        } else {
+            System.out.println("You are out of stock!");
+        }
+    }
+
+    public void useItemCure(Player player) {
+        if (this.quantity > 0){
+            System.out.println(this.useText);
+            //Will be added to later when there are status effects
+        }
+        else{
+            System.out.println("You are out of stock!");
+        }
+    }
+
+    public void useItemHealing(Player player) {
+        if (this.quantity > 0){
+            System.out.println(this.useText);
+            player.setCurrentHP(player.getCurrentHP()+this.effectPower);
+            System.out.println("Your HP is now:" + player.getCurrentHP());
+            this.quantity -= 1;
+        }
+        else {
+            System.out.println("You are out of stock!");
+        }
+    }
+
+    public void useItemMultiTarget(ArrayList<Enemy> enemies) {
+        if (this.quantity > 0){
+            System.out.println(this.useText);
+            for (Enemy enemy: enemies){
+                enemy.setCurrentHP(enemy.getCurrentHP()-this.effectPower);
                 if (enemy.getCurrentHP() < 0) {
                     enemy.setCurrentHP(0);
                 }
-                System.out.println("Leaving "+enemy.getName()+" at "+enemy.getCurrentHP()+"/"+enemy.getMaxHP()+"HP");
+                System.out.println("Leaving " + enemy.getName() +
+                        " at " + enemy.getCurrentHP() + "/" + enemy.getMaxHP() + "HP");
+            }
+            this.quantity -= 1;
+        }
+        else {
+            System.out.println("You are out of Stock!");
         }
     }
 
-    private static void itemEffect(int itemID, Player player, Enemy enemy) {
+    public void useItemMultiTarget(Enemy enemy) {
+        useItemSingleTarget(enemy);
+    }
+
+    public static Item ItemGen(int itemID, int quantity) {
         switch (itemID) {
-            case 0://Basic Healing Potion
-                System.out.println("You feel yourself become more healthy in a vaguely magical way," +
-                        " it leaves an unpleasant aftertaste in your mouth");
-                player.setCurrentHP(player.getCurrentHP() + 10);
-                System.out.println("Your HP is now "+player.getCurrentHP()+"/"+player.getMaxHP());
-                break;
-            case 1://Throwing Knife
-                System.out.println("You deftly throw the knife towards your enemy");
-                enemy.setCurrentHP(enemy.getCurrentHP()-3);
-                if (enemy.getCurrentHP() < 0) {
-                    enemy.setCurrentHP(0);
-                }
-                System.out.println("Leaving "+enemy.getName()+" at "+enemy.getCurrentHP()+"/"+enemy.getMaxHP()+"HP");
+            case 0:
+                return new Item(0, "Healing Potion",
+                        "A burbling flask of ominously sweet liquid, restores your health.",
+                        "You feel yourself become more healthy in a vaguely magical way," +
+                                " it leaves an unpleasant aftertaste in your mouth", ItemEffectType.HEALING,
+                        10, quantity);
+            case 1:
+                return new Item(1, "Throwing Knife",
+                        "Throwing these shards of jagged metal makes you feel both dangerous and cool.",
+                        "You deftly throw the knife towards your enemy", ItemEffectType.SINGLETARGET,
+                        5, quantity);
+            case 2:
+                return new Item(2,"Firebomb",
+                        "Fireballs for the masses! Smells of sulfur and bronze",
+                        "The firebomb explodes!", ItemEffectType.MULTITARGET,
+                        6,quantity);
+            case 3:
+                return new Item(3,"Joke Book","Sir Fitzroy's Jokes for the daft and useless",
+                        "The enemy is psychically damaged with how unfunny you are. Are you proud of yourself?",
+                        ItemEffectType.SINGLETARGET,6,quantity);
         }
+        System.out.println("Not Valid Item ID");
+        return null;
     }
 }

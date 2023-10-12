@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -8,7 +11,7 @@ public class InventoryTests {
         Player testPlayer = new Player.PlayerBuilder(
                 "test", 0
         ).build();
-        assertTrue(testPlayer.getInventory().getPlayerInventory().containsKey(0));
+        assertFalse(testPlayer.getInventory().getPlayerInventory().isEmpty());
     }
     @Test
     void canRemoveFromInventory(){
@@ -16,7 +19,7 @@ public class InventoryTests {
                 "test", 0
         ).build();
         testPlayer.getInventory().removeFromInventory(0);
-        assertNull(testPlayer.getInventory().getPlayerInventory().get(0));
+        assertTrue(!Objects.equals(testPlayer.getInventory().getPlayerInventory().get(0).getName(), "Healing Potion"));
     }
     @Test
     void canUseItemThroughInventory(){

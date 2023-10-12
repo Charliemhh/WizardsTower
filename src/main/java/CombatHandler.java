@@ -60,7 +60,7 @@ public class CombatHandler {
 
     private void deadCheck() {
         if (player.getIsDead()) {
-            System.out.println(player.getName() + " has died! What a shame.");
+            System.out.println(player.getName() + " has died! What a shame.\n");
             combatOver = true;
         }
         if (!enemies.isEmpty()) {
@@ -76,6 +76,8 @@ public class CombatHandler {
         } else {
             if (enemy.getIsDead()) {
                 System.out.println("The " + enemy.getName() + " dies, victory is yours!");
+                player.addXP(enemy.getRewardXP());
+                System.out.println("You gain "+ enemy.getRewardXP()+"XP!\n");
                 combatOver = true;
             }
         }
@@ -88,7 +90,9 @@ public class CombatHandler {
         int i = 0;
         for (Enemy e : enemies) {
             if (e.getIsDead()) {
-                System.out.println("The " + e.getName() + " dies\n");
+                System.out.println("The " + e.getName() + " dies");
+                player.addXP(e.getRewardXP());
+                System.out.println("You gain "+ e.getRewardXP()+"XP!\n");
                 deadList[i] = true;
                 deadToRemove = e;
             } else {
@@ -98,7 +102,7 @@ public class CombatHandler {
         }
         if (Stream.of(deadList).allMatch(Boolean::valueOf)) {
             combatOver = true;
-            System.out.println("The enemies are dead, victory is yours!");
+            System.out.println("The enemies are dead, victory is yours!\n");
         }
         if (deadToRemove != null) {
             enemies.remove(deadToRemove);
@@ -169,15 +173,16 @@ public class CombatHandler {
                 break;
             case 2:
                 int i = 0;
-                while (!player.getInventory().getPlayerInventory().containsKey(i - 1) && i == 0) {
+                while (!(player.getInventory().findItem(i) == null )&& (i == 0)) {
                     System.out.println("Choose an item to use:");
                     player.getInventory().seeInventory();
                     i = scanner.nextInt();
                 }
+                Item selectedItem = player.getInventory().getPlayerInventory().get(i-1);
                 if (!enemies.isEmpty()) {
-                    player.getInventory().useItem(i - 1, player, enemies);
+                    player.getInventory().useItem(selectedItem.getItemID(), player, enemies);
                 } else {
-                    player.getInventory().useItem(i - 1, player, enemy);
+                    player.getInventory().useItem(selectedItem.getItemID(), player, enemy);
                 }
 
         }
