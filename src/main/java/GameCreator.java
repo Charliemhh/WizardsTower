@@ -10,12 +10,11 @@ public class GameCreator {
         GameMap gameMap = createGameMap(0);
         Scanner scanner = new Scanner(System.in);
         ArrayList<GameRoom> gameRooms = populateGameMap(gameMap);
-        System.out.println("Welcome to Wizard's Tower, you will take control of a hero of your choosing\n" +
-                " as they traverse the various levels and brave the dangers of the tower");
+        System.out.println("Welcome to Wizard's Tower!");
         Player player = createYourCharacter();
         welcomeMessage(player);
         ExplorationHandler explorationHandler = new ExplorationHandler(player, gameMap, gameRooms);
-        Thread.sleep(2000);
+        Thread.sleep(1500);
         explorationHandler.ExplorationStart();
 
     }
@@ -67,7 +66,7 @@ public class GameCreator {
 
     private static void welcomeMessage(Player player) {
         System.out.println("Welcome " + player.getName() + " to the wizard's tower!");
-        System.out.println(" The great wizard bumble-guff has called for help" +
+        System.out.println(" The great wizard Bumble-Guff has called for help" +
                 " the king has tasked you with climbing his tower with the goal of saving him.\n " +
                 "Sadly for you the king doesn't much like bumble-guff after an unfortunate incident " +
                 "at the castle.\n So, rather than someone competent, you’ve been sent." +
