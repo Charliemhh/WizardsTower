@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class GameRoom {
     private final int roomIndex; //Matches with index number from GameMap
@@ -8,13 +10,13 @@ public class GameRoom {
 
     private String longDesc; //Used for examining
 
-    private HashMap<Integer,String> passageLabels; //Text applied to possible pathways
+    private HashMap<Integer, String> passageLabels; //Text applied to possible pathways
 
     private ArrayList<Integer> enemyInRoom; // ID of enemy in the room
 
     private ArrayList<Integer> trapInRoom; // ID of trap in the room
 
-    private ArrayList<Object> thingsInRoom;
+    private ArrayList<RoomItems> thingsInRoom;
 
     public GameRoom(int roomIndex) {
         this.roomIndex = roomIndex;
@@ -63,19 +65,62 @@ public class GameRoom {
         this.enemyInRoom = enemyInRoom;
     }
 
-    public HashMap<Integer,String> getPassageLabels() {
+    public HashMap<Integer, String> getPassageLabels() {
         return passageLabels;
     }
 
-    public void setPassageLabels(HashMap<Integer,String> passageLabels) {
+    public void setPassageLabels(HashMap<Integer, String> passageLabels) {
         this.passageLabels = passageLabels;
     }
 
-    public ArrayList<Object> getThingsInRoom() {
+    public ArrayList<RoomItems> getThingsInRoom() {
         return thingsInRoom;
     }
 
-    public void setThingsInRoom(ArrayList<Object> thingsInRoom) {
+    public void setThingsInRoom(ArrayList<RoomItems> thingsInRoom) {
         this.thingsInRoom = thingsInRoom;
+    }
+
+
+    private void roomitemPickUp(RoomItems roomItems) {
+
+    }
+
+    enum RoomItemTypes {
+        EQUIPMENT, ITEM;
+    }
+
+    public static class RoomItems {
+        private final RoomItemTypes type;
+
+        private final int itemID;
+
+        private final int quantity;
+
+        private final String inspectDescription;
+
+        public RoomItems(RoomItemTypes type, int itemID, int quantity, String inspectDescription) {
+            this.type = type;
+            this.itemID = itemID;
+            this.quantity = quantity;
+            this.inspectDescription = inspectDescription;
+        }
+
+        public RoomItemTypes getType() {
+            return type;
+        }
+
+        public int getItemID() {
+            return itemID;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public String getInspectDescription() {
+            return inspectDescription;
+        }
+
     }
 }
