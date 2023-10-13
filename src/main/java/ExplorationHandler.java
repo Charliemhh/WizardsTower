@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class ExplorationHandler {
-    private Player player = null;
+    private final Player player;
 
     private final Scanner scanner = new Scanner(System.in);
     private final GameMap gameMap;
@@ -9,6 +9,8 @@ public class ExplorationHandler {
     private final ArrayList<GameRoom> gameRooms;
     private GameRoom currentRoom;
     private final CombatHandler combatHandler = new CombatHandler();
+    boolean firstRoom = true;
+    boolean endOfLevel = false; //To be used to end levels and cause the loading of the next down the line.
 
 
     public ExplorationHandler(Player player, GameMap gameMap, ArrayList<GameRoom> gameRooms) {
@@ -21,14 +23,14 @@ public class ExplorationHandler {
         return this.gameRooms.get(index);
     }
 
-    public GameMap getGameMap() {
+    public GameMap getGameMap() {//will be used later.
         return this.gameMap;
     }
 
     public void ExplorationStart() {
         currentRoom = getRoom(player.getCurrentLocation());
         System.out.println("You find yourself in " + currentRoom.getShortDesc());
-        while (!player.getIsDead()) {
+        while (!player.getIsDead() && !endOfLevel) {
             enemyCheck(currentRoom);
             playerOption();
         }
@@ -52,20 +54,21 @@ public class ExplorationHandler {
     }
 
     private void playerOption() {
+        if (!firstRoom) {
+            trapActivationRisk();
+        }
         int option;
         System.out.println("What would you like to do?");
         System.out.println("1: Move elsewhere");
         System.out.println("2: Take a look around");
         System.out.println("3: Check for traps");
         System.out.println("4: Open your inventory");
-        System.out.println("5: Open your equipment");
-        System.out.println("6: Look at your currently worn equipment");
-        //checkForThings();
+        System.out.println("5: Look at your equipment");
         while (true) {
             try {
                 System.out.println("Choose an Action: ");
                 option = scanner.nextInt();
-                if (option > 0 && option <= 6) {
+                if (option > 0 && option <= 5) {
                     break;
                 }
 
@@ -85,17 +88,34 @@ public class ExplorationHandler {
                 checkForTraps();
                 break;
             case 4:
-                player.getInventory().seeInventory();//for now should have ability to use.
+                player.getInventory().presentUseOptions(player);
                 break;
             case 5:
-                for (Equipment e : player.getEquipment().getEquipmentInventory()) {
-                    System.out.println("Slot: " + e.getBodySlot()
-                            + "  Name: " + e.getName());
+                player.getEquipment().presentForExploration(player);
+                break;
+        }
+    }
+
+    private void trapActivationRisk() {
+        if (!currentRoom.getTrapInRoom().isEmpty()) {
+            Random random = new Random();
+            int activationChance = random.nextInt(100);
+            if (activationChance > 50) {
+                int dodgeChance = player.getStatBlock().getLitheness();
+                for (int i = 0; i < currentRoom.getTrapInRoom().size(); i++) {
+                    int dodgeDifficulty = random.nextInt(10);
+                    Trap trapCurrentRoom = Trap.TrapCreator.createTrap(currentRoom.getTrapInRoom().get(i));
+                    assert trapCurrentRoom != null;
+                    System.out.println(trapCurrentRoom.getActiveDescription());
+                    if (dodgeChance < dodgeDifficulty) {
+                        player.setCurrentHP(player.getCurrentHP() - trapCurrentRoom.trapActivate());
+                        System.out.println("You fail to dodge! You take " + trapCurrentRoom.getTrapEffects() + " Damage!");
+                        System.out.println("Leaving you at " + player.getCurrentHP() + "/" + player.getMaxHP() + "HP");
+                    } else {
+                        System.out.println("You manage to dodge out of the way!");
+                    }
                 }
-                break;
-            case 6:
-                player.getEquipment().getEquippedItems();
-                break;
+            }
         }
     }
 
@@ -146,6 +166,7 @@ public class ExplorationHandler {
         player.setCurrentLocation(adjRoomList.get(option));
         currentRoom = getRoom(player.getCurrentLocation());
         System.out.println("You find yourself in " + currentRoom.getShortDesc());
+        firstRoom = false;
     }
 
     public void checkThingsInRoom() {

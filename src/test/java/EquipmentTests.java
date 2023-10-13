@@ -1,4 +1,3 @@
-import net.bytebuddy.build.HashCodeAndEqualsPlugin;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,24 +35,6 @@ public class EquipmentTests {
         assertNotNull(testPlayer.getEquipment().findEquipment(equipment, testPlayer.getEquipment().getEquipmentInventory()));
     }
 
-    @Test
-    void effectCheckReturnsCorrectValue() {
-        Player testPlayer = new Player.PlayerBuilder(
-                "test",
-                1).build();
-        int total = 0;
-        total += testPlayer.getEquipment().effectCheck(3);
-        total += testPlayer.getEquipment().effectCheck(5);
-        assertEquals(3, total);
-    }
-
-    @Test
-    void canCheckEquipmentName() {
-        Player testPlayer = new Player.PlayerBuilder(
-                "test",
-                1).build();
-        assertEquals("Wee Dagger", testPlayer.getEquipment().getEquipmentName(5));
-    }
 
     @Test
     void playerCannotEquipTwoOfTheSameBodySlot() {

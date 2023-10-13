@@ -114,7 +114,7 @@ public class CombatHandler {
     private void makeAttack(Character attacker, Character target) {
         if (attacker.getClass() == Player.class) {
             int[] attackResults = attacker.getAttackDam();
-            String mainWeapon = EquipmentInventory.getEquipmentName(attackResults[2]);
+            String mainWeapon = player.getEquipment().getWeaponName();
             System.out.println(attacker.getName() + getAttackFlavor(attackResults[1]) +
                     target.getName() + " with their " + mainWeapon +
                     " for " + attackResults[0] + " damage!");
@@ -162,7 +162,7 @@ public class CombatHandler {
                 }
             } catch (InputMismatchException err) {
                 System.out.println("Please only enter an available option");
-                option = scanner.nextInt();
+                scanner.nextInt();
             }
         }
         switch (option) {
@@ -181,7 +181,7 @@ public class CombatHandler {
                         System.out.println("Choose an item to use:");
                         player.getInventory().seeInventory();
                         i = scanner.nextInt();
-                    }catch (InputMismatchException e){
+                    } catch (InputMismatchException e) {
                         System.out.println("Please select a valid option!");
                         scanner.next();
                     }

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class EquipmentInventory {
 
@@ -44,7 +46,8 @@ public class EquipmentInventory {
     }
 
     public void removeCurrentEquipment(int equipmentID) {
-        for (Equipment e : currentlyEquipped) {
+        for (int i = 0; i < currentlyEquipped.size(); i++) {
+            Equipment e = currentlyEquipped.get(i);
             if (e.getEquipmentID() == equipmentID) {
                 currentlyEquipped.remove(e);
                 if (!equipmentInventory.contains(e)) {
@@ -72,84 +75,17 @@ public class EquipmentInventory {
         return null;
     }
 
-    public void getEquippedItems() {
-        for (Equipment e : this.currentlyEquipped) {
-            System.out.println("Slot: " + e.getBodySlot() + "  Name: " + e.getName());
+    public String getWeaponName(){
+        for (Equipment e: currentlyEquipped){
+            if (e.getBodySlot()== Equipment.BodySlot.MAINHAND){
+                return e.getName();
+            }
         }
+        return "Bare Hand";
     }
 
 
-    public static String getEquipmentName(int id) {
-        switch (id) {
-            case 0:
-                return "Iron Helmet";
-            case 1:
-                return "Chain-Mail Shirt";
-            case 2:
-                return "Rusty Sword";
-            case 3:
-                return "Dusty Beret";
-            case 4:
-                return "Leather Shirt";
-            case 5:
-                return "Wee Dagger";
-            case 6:
-                return "Hand-me-Down Staff";
-            case 7:
-                return "Off-brand Wizard's hat";
-            case 8:
-                return "Normal Suit";
-            case 9:
-                return "Briefcase";
-            case 10:
-                return "Sarcasm Bat";
-            case 11:
-                return "Lord of the Things(tm) T-shirt";
-            case 12:
-                return "Posh shoes";
-            case 13:
-                return "Robe with holes in";
-        }
-        return null;
-    }
-
-    public int effectCheck(int equipmentID) {
-        //The logic of where the numerical effects go will be handled in combat handler.
-        //As well as loop through current equipment
-        switch (equipmentID) {
-            case 0: //Iron Helmet
-                return -1;
-            case 1: //Chain-Mail Shirt
-                return -2;
-            case 2: //Rusty Sword
-                return +0;
-            case 3://Dusty Beret
-                return +1;
-            case 4://Leather Shirt
-                return -1;
-            case 5://Wee Dagger
-                return +2;
-            case 6://Hand-me-Down Staff
-                return +1;
-            case 7://Off-brand Wizard's hat
-                return +1;
-            case 8://Normal Suit
-                return 0;
-            case 9://Briefcase
-                return +1;
-            case 10://Sarcasm Bat
-                return +2;
-            case 11: //Lord of the Things T-shirt
-                return +1;
-            case 12: //Posh shoes
-                return 0;
-            case 13:
-                return 0;
-        }
-        return 0;
-    }
-
-    public AttackType attackTypeCheck(int i) {
+    public AttackType attackTypeCheck(int i) {//likely to be used later.
         switch (i) {
             case 2:
             case 9:
@@ -163,5 +99,57 @@ public class EquipmentInventory {
 
         }
         return null;
+    }
+
+    public void presentForExploration(Player player) {
+        System.out.println("You are currently wearing: \n");
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < this.currentlyEquipped.size(); i++) {
+            Equipment equipment = this.currentlyEquipped.get(i);
+            if (equipment.getBodySlot() == Equipment.BodySlot.MAINHAND || equipment.getBodySlot() == Equipment.BodySlot.OFFHAND) {
+                System.out.println("In your " + equipment.getBodySlot() + " you are holding your " + equipment.getName());
+            } else {
+                System.out.println("On your " + equipment.getBodySlot() + " you are wearing your " + equipment.getName());
+            }
+        }
+        System.out.println("\nIn your inventory you have: ");
+        if (!this.equipmentInventory.isEmpty()) {
+            for (int i = 0; i < this.equipmentInventory.size(); i++) {
+                Equipment equipment = this.equipmentInventory.get(i);
+                System.out.println((i + 1) + ":" + " Slot - " + equipment.getBodySlot() + " " + equipment.getName());
+            }
+            System.out.println();
+
+            while (true) {
+                System.out.println("Select a piece of Equipment to use, or enter -1 to exit");
+                try {
+                    int option = scanner.nextInt();
+                    if (option == -1) {
+                        break;
+                    }
+                    if (option - 1 <= this.equipmentInventory.size() && this.equipmentInventory.get(option - 1) != null && option > 0) {
+                        System.out.println("You equip your " + (this.equipmentInventory.get(option - 1).getName()));
+                        equipItem(this.equipmentInventory.get(option - 1));
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid option");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Please enter a valid option");
+                    scanner.next();
+                }
+
+            }
+        }
+    }
+
+    private void equipItem(Equipment equipment) {
+        for (int i = 0; i < currentlyEquipped.size(); i++) {
+            if (currentlyEquipped.get(i).getBodySlot() == equipment.getBodySlot()) {
+                System.out.println("and place your "+currentlyEquipped.get(i).getName()+" back into your inventory.");
+                removeCurrentEquipment(currentlyEquipped.get(i).getEquipmentID());
+                setCurrentlyEquipped(equipment);
+            }
+        }
     }
 }

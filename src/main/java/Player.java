@@ -62,18 +62,16 @@ public class Player implements Character {
     public int[] getAttackDam() {
         int totalDamage = 0;
         AttackType mainHandAttackType = AttackType.PHYSICAL;
-        int mainHandEquipmentID = 2;
         for (Equipment e : this.getEquipment().getCurrentlyEquipped()) {
             if (e.getBodySlot() == Equipment.BodySlot.MAINHAND) {
                 totalDamage += e.getEffectPower();
                 mainHandAttackType = e.getAttackType();
-                mainHandEquipmentID = e.getEquipmentID();
             }else if(e.getBodySlot() == Equipment.BodySlot.OFFHAND){
                 totalDamage += e.getEffectPower();
             }
         }
         totalDamage += this.genAttackDam(mainHandAttackType);
-        return new int[]{totalDamage,mainHandAttackType.getValue(), mainHandEquipmentID,};
+        return new int[]{totalDamage,mainHandAttackType.getValue()};
     }
 
     public int getDefenceBonus(){

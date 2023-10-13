@@ -16,6 +16,10 @@ public class Trap {
         return this.trapEffects;
     }
 
+    public int getTrapEffects(){
+        return this.trapEffects;
+    }
+
     public String getActiveDescription() {
         return activeDescription;
     }
