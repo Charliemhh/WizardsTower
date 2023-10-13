@@ -68,11 +68,11 @@ public class GameCreator {
 
     private static void welcomeMessage(Player player) {
         System.out.println("Welcome " + player.getName() + " to the wizard's tower!");
-        System.out.println("The great wizard bumble-guff has called for help" +
+        System.out.println(" The great wizard bumble-guff has called for help" +
                 " the king has tasked you with climbing his tower with the goal of saving him.\n " +
-                "Sadly, for you the king doesn't much like bumble-guff after an unfortunate incident " +
-                "at the castle,\n so rather than someone competent, you’ve been sent." +
-                " The creatures and traps lying in wait will confound even the most intrepid of adventurers," +
+                "Sadly for you the king doesn't much like bumble-guff after an unfortunate incident " +
+                "at the castle.\n So, rather than someone competent, you’ve been sent." +
+                "\nThe creatures and traps lying in wait will confound even the most intrepid of adventurers," +
                 " so be careful!”");
     }
 
@@ -97,8 +97,8 @@ public class GameCreator {
                     break;
             }
             gameRoom.setThingsInRoom(getThingInRoom(gameRoom, i));
-            gameRoom.setShortDesc("Test room " + i);
-            gameRoom.setLongDesc("Long Description for test room " + i+1);
+            gameRoom.setShortDesc("Test room " + (i+1));
+            gameRoom.setLongDesc("Long Description for test room " + (i+1));
             gameRoom.setTrapInRoom(testTrapArray);
             gameRoom.setEnemyInRoom(testEnemyArray);
             getPassageLabels(gameRoom, i);

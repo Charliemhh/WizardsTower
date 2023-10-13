@@ -121,7 +121,7 @@ public class EquipmentInventory {
             System.out.println();
 
             while (true) {
-                System.out.println("Select a piece of Equipment to use, or enter -1 to exit");
+                System.out.println("Select a piece of Equipment to equip, or enter -1 to exit");
                 try {
                     int option = scanner.nextInt();
                     if (option == -1) {

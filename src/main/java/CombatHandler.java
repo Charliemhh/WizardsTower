@@ -15,43 +15,54 @@ public class CombatHandler {
 
 
     public void combatRound(Player player, Enemy enemy) {
-        System.out.println("The " + enemy.getName() + " lurches towards you, prepare to fight!");
-        this.player = player;
-        this.enemy = enemy;
-        turnOrder = getTurnOrder(player, enemy);
-        while (!combatOver) {
-            for (Character actor : turnOrder) {
-                if (actor.getClass() == Player.class) {
-                    displayPlayerOptions();
-                    deadCheck();
-                    if (combatOver) {
-                        break;
+        if (player.getIsDead()) {
+            combatOver = true;
+        } else {
+            combatOver = false;
+
+            System.out.println("A " + enemy.getName() + " lurches towards you from the shadows, prepare to fight!");
+            this.player = player;
+            this.enemy = enemy;
+            turnOrder = getTurnOrder(player, enemy);
+            while (!combatOver) {
+                for (Character actor : turnOrder) {
+                    if (actor.getClass() == Player.class) {
+                        displayPlayerOptions();
+                        deadCheck();
+                        if (combatOver) {
+                            break;
+                        }
+                    } else {
+                        makeAttack(enemy, player);
+                        deadCheck();
                     }
-                } else {
-                    makeAttack(enemy, player);
-                    deadCheck();
                 }
             }
         }
     }
 
     public void combatRound(Player player, ArrayList<Enemy> enemies) {
-        this.player = player;
-        this.enemies = enemies;
-        System.out.println("The vile forces of darkness lurch towards you, prepare to fight!");
-        nameEnemies();
-        while (!combatOver) {
-            turnOrder = getTurnOrder(player, enemies);
-            for (int i = 0; i < turnOrder.size(); i++) {
-                if (turnOrder.get(i).getClass() == Player.class) {
-                    displayPlayerOptions();
-                    deadCheck();
-                    if (combatOver) {
-                        break;
+        if (player.getIsDead()) {
+            combatOver = true;
+        } else {
+            combatOver = false;
+            this.player = player;
+            this.enemies = enemies;
+            System.out.println("The vile forces of darkness lurch towards you, prepare to fight!");
+            nameEnemies();
+            while (!combatOver) {
+                turnOrder = getTurnOrder(player, enemies);
+                for (int i = 0; i < turnOrder.size(); i++) {
+                    if (turnOrder.get(i).getClass() == Player.class) {
+                        displayPlayerOptions();
+                        deadCheck();
+                        if (combatOver) {
+                            break;
+                        }
+                    } else {
+                        makeAttack(turnOrder.get(i), player);
+                        deadCheck();
                     }
-                } else {
-                    makeAttack(turnOrder.get(i), player);
-                    deadCheck();
                 }
             }
         }

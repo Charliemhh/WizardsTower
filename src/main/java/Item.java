@@ -110,7 +110,7 @@ public class Item {
         if (this.quantity > 0){
             System.out.println(this.useText);
             player.setCurrentHP(player.getCurrentHP()+this.effectPower);
-            System.out.println("Your HP is now:" + player.getCurrentHP());
+            System.out.println("Your HP is now: " + player.getCurrentHP() +"/"+ player.getMaxHP()+"HP");
             this.quantity -= 1;
         }
         else {

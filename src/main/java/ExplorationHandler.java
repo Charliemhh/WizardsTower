@@ -28,12 +28,16 @@ public class ExplorationHandler {
     }
 
     public void ExplorationStart() {
-        currentRoom = getRoom(player.getCurrentLocation());
+        currentRoom = getRoom(this.player.getCurrentLocation());
         System.out.println("You find yourself in " + currentRoom.getShortDesc());
-        while (!player.getIsDead() && !endOfLevel) {
+        while (!this.player.getIsDead()) {
             enemyCheck(currentRoom);
+            if (this.player.getIsDead()) {
+                break;
+            }
             playerOption();
         }
+        System.out.println("Game Over!");
     }
 
     private void enemyCheck(GameRoom currentRoom) {
@@ -43,11 +47,11 @@ public class ExplorationHandler {
                 for (int i : currentRoom.getEnemyInRoom()) {
                     enemies.add(EnemyTypes.generateEnemy(i));
                 }
-                combatHandler.combatRound(player, enemies);
+                combatHandler.combatRound(this.player, enemies);
                 currentRoom.getEnemyInRoom().clear();
             } else {
                 Enemy enemy = EnemyTypes.generateEnemy(currentRoom.getEnemyInRoom().get(0));
-                combatHandler.combatRound(player, Objects.requireNonNull(enemy));
+                combatHandler.combatRound(this.player, Objects.requireNonNull(enemy));
                 currentRoom.getEnemyInRoom().clear();
             }
         }
@@ -88,10 +92,10 @@ public class ExplorationHandler {
                 checkForTraps();
                 break;
             case 4:
-                player.getInventory().presentUseOptions(player);
+                this.player.getInventory().presentUseOptions(this.player);
                 break;
             case 5:
-                player.getEquipment().presentForExploration(player);
+                this.player.getEquipment().presentForExploration(this.player);
                 break;
         }
     }
@@ -101,16 +105,16 @@ public class ExplorationHandler {
             Random random = new Random();
             int activationChance = random.nextInt(100);
             if (activationChance > 50) {
-                int dodgeChance = player.getStatBlock().getLitheness();
+                int dodgeChance = this.player.getStatBlock().getLitheness();
                 for (int i = 0; i < currentRoom.getTrapInRoom().size(); i++) {
                     int dodgeDifficulty = random.nextInt(10);
                     Trap trapCurrentRoom = Trap.TrapCreator.createTrap(currentRoom.getTrapInRoom().get(i));
                     assert trapCurrentRoom != null;
                     System.out.println(trapCurrentRoom.getActiveDescription());
                     if (dodgeChance < dodgeDifficulty) {
-                        player.setCurrentHP(player.getCurrentHP() - trapCurrentRoom.trapActivate());
+                        this.player.setCurrentHP(this.player.getCurrentHP() - trapCurrentRoom.trapActivate());
                         System.out.println("You fail to dodge! You take " + trapCurrentRoom.getTrapEffects() + " Damage!");
-                        System.out.println("Leaving you at " + player.getCurrentHP() + "/" + player.getMaxHP() + "HP");
+                        System.out.println("Leaving you at " + this.player.getCurrentHP() + "/" + this.player.getMaxHP() + "HP");
                     } else {
                         System.out.println("You manage to dodge out of the way!");
                     }
@@ -123,7 +127,7 @@ public class ExplorationHandler {
         if (!currentRoom.getTrapInRoom().isEmpty()) {
             boolean trapFound = false;
             Random random = new Random();
-            int discoverChance = player.getStatBlock().getBraininess() + player.getStatBlock().getLitheness();
+            int discoverChance = this.player.getStatBlock().getBraininess() + this.player.getStatBlock().getLitheness();
             for (int i = 0; i < currentRoom.getTrapInRoom().size(); i++) {
                 int discoverBoundary = random.nextInt(20);
                 int trapID = currentRoom.getTrapInRoom().get(i);
@@ -163,8 +167,8 @@ public class ExplorationHandler {
                 System.out.println("Please enter a valid option:");
             }
         }
-        player.setCurrentLocation(adjRoomList.get(option));
-        currentRoom = getRoom(player.getCurrentLocation());
+        this.player.setCurrentLocation(adjRoomList.get(option));
+        currentRoom = getRoom(this.player.getCurrentLocation());
         System.out.println("You find yourself in " + currentRoom.getShortDesc());
         firstRoom = false;
     }
@@ -201,10 +205,10 @@ public class ExplorationHandler {
     private void roomItemPickUp(GameRoom.RoomItems roomItems) {
         switch (roomItems.getType()) {
             case ITEM:
-                player.getInventory().pickUp(roomItems.getItemID(), roomItems.getQuantity());
+                this.player.getInventory().pickUp(roomItems.getItemID(), roomItems.getQuantity());
                 break;
             case EQUIPMENT:
-                player.getEquipment().addToEquipmentInventory(Equipment.EquipmentGen(roomItems.getItemID()));
+                this.player.getEquipment().addToEquipmentInventory(Equipment.EquipmentGen(roomItems.getItemID()));
 
         }
     }
