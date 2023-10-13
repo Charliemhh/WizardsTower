@@ -15,43 +15,54 @@ public class CombatHandler {
 
 
     public void combatRound(Player player, Enemy enemy) {
-        System.out.println("The " + enemy.getName() + " lurches towards you, prepare to fight!");
-        this.player = player;
-        this.enemy = enemy;
-        turnOrder = getTurnOrder(player, enemy);
-        while (!combatOver) {
-            for (Character actor : turnOrder) {
-                if (actor.getClass() == Player.class) {
-                    displayPlayerOptions();
-                    deadCheck();
-                    if (combatOver) {
-                        break;
+        if (player.getIsDead()) {
+            combatOver = true;
+        } else {
+            combatOver = false;
+
+            System.out.println("A " + enemy.getName() + " lurches towards you from the shadows, prepare to fight!");
+            this.player = player;
+            this.enemy = enemy;
+            turnOrder = getTurnOrder(player, enemy);
+            while (!combatOver) {
+                for (Character actor : turnOrder) {
+                    if (actor.getClass() == Player.class) {
+                        displayPlayerOptions();
+                        deadCheck();
+                        if (combatOver) {
+                            break;
+                        }
+                    } else {
+                        makeAttack(enemy, player);
+                        deadCheck();
                     }
-                } else {
-                    makeAttack(enemy, player);
-                    deadCheck();
                 }
             }
         }
     }
 
     public void combatRound(Player player, ArrayList<Enemy> enemies) {
-        this.player = player;
-        this.enemies = enemies;
-        System.out.println("The vile forces of darkness lurch towards you, prepare to fight!");
-        nameEnemies();
-        while (!combatOver) {
-            turnOrder = getTurnOrder(player, enemies);
-            for (int i = 0; i < turnOrder.size(); i++) {
-                if (turnOrder.get(i).getClass() == Player.class) {
-                    displayPlayerOptions();
-                    deadCheck();
-                    if (combatOver) {
-                        break;
+        if (player.getIsDead()) {
+            combatOver = true;
+        } else {
+            combatOver = false;
+            this.player = player;
+            this.enemies = enemies;
+            System.out.println("The vile forces of darkness lurch towards you, prepare to fight!");
+            nameEnemies();
+            while (!combatOver) {
+                turnOrder = getTurnOrder(player, enemies);
+                for (int i = 0; i < turnOrder.size(); i++) {
+                    if (turnOrder.get(i).getClass() == Player.class) {
+                        displayPlayerOptions();
+                        deadCheck();
+                        if (combatOver) {
+                            break;
+                        }
+                    } else {
+                        makeAttack(turnOrder.get(i), player);
+                        deadCheck();
                     }
-                } else {
-                    makeAttack(turnOrder.get(i), player);
-                    deadCheck();
                 }
             }
         }
@@ -175,22 +186,31 @@ public class CombatHandler {
                 break;
             case 2:
                 int i = 0;
-                while (!(player.getInventory().findItem(i) == null) && (i == 0)) {
-                    try {
-                        i = 0;
-                        System.out.println("Choose an item to use:");
-                        player.getInventory().seeInventory();
-                        i = scanner.nextInt();
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please select a valid option!");
-                        scanner.next();
+                if (player.getInventory().getPlayerInventory().size() > 0) {
+                    while (!(player.getInventory().findItem(i) == null) && (i == 0)) {
+                        try {
+                            i = 0;
+                            System.out.println("Choose an item to use:");
+                            player.getInventory().seeInventory();
+                            i = scanner.nextInt();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Please select a valid option!");
+                            scanner.next();
+                        }
                     }
-                }
-                Item selectedItem = player.getInventory().getPlayerInventory().get(i - 1);
-                if (!enemies.isEmpty()) {
-                    player.getInventory().useItem(selectedItem.getItemID(), player, enemies);
+                    Item selectedItem = null;
+                    if (player.getInventory().getPlayerInventory().size() == 1){
+                        selectedItem = player.getInventory().getPlayerInventory().get(0);
+                    }else{
+                        selectedItem = player.getInventory().getPlayerInventory().get(i-1);
+                    }
+                    if (!enemies.isEmpty()) {
+                        player.getInventory().useItem(selectedItem.getItemID(), player, enemies);
+                    } else {
+                        player.getInventory().useItem(selectedItem.getItemID(), player, enemy);
+                    }
                 } else {
-                    player.getInventory().useItem(selectedItem.getItemID(), player, enemy);
+                    System.out.println("Your inventory is empty! ");
                 }
 
         }
