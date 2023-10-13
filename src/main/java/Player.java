@@ -75,13 +75,13 @@ public class Player implements Character {
     }
 
     public int getDefenceBonus(){
-        int totalreduction = 0;
+        int totalReduction = 0;
         for (Equipment e: this.getEquipment().getCurrentlyEquipped()){
             if (e.getEffectType()== Equipment.EquipmentEffectType.DEFENCEBUFF){
-                totalreduction += e.getEffectPower();
+                totalReduction += e.getEffectPower();
             }
         }
-        return  totalreduction;
+        return  totalReduction;
     }
 
     public int genAttackDam(AttackType type) {
