@@ -12,11 +12,14 @@ public class CombatHandlerTesting {
         Player testPlayer = new Player.PlayerBuilder(
                 "Test",
                 0).build();
-        Enemy testenemy = EnemyTypes.generateEnemy(0);
-        Enemy testEnemy2 = EnemyTypes.generateEnemy(0);
+        testPlayer.addXP(300);
+        Enemy testenemy = EnemyTypes.generateEnemy(5);
+        Enemy testEnemy2 = EnemyTypes.generateEnemy(5);
+        Enemy testEnemy3 = EnemyTypes.generateEnemy(5);
         ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(testenemy);
         enemies.add(testEnemy2);
+        enemies.add(testEnemy3);
         combatHandler.combatRound(testPlayer,enemies);
     }
 }

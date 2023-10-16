@@ -4,7 +4,7 @@ import Characters.Character;
 import Characters.Enemy;
 import Characters.Player;
 import Items.Item;
-
+import java.lang.Integer;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -168,7 +168,7 @@ public class CombatHandler {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose your action hero!");
         System.out.println("1: Attack");
-        System.out.println("2: Use an Items.Item");
+        System.out.println("2: Use an Item");
         //System.out.println("3: Try to escape!");
         while (true) {
             try {
@@ -205,10 +205,10 @@ public class CombatHandler {
                         }
                     }
                     Item selectedItem = null;
-                    if (player.getInventory().getPlayerInventory().size() == 1){
+                    if (player.getInventory().getPlayerInventory().size() == 1) {
                         selectedItem = player.getInventory().getPlayerInventory().get(0);
-                    }else{
-                        selectedItem = player.getInventory().getPlayerInventory().get(i-1);
+                    } else {
+                        selectedItem = player.getInventory().getPlayerInventory().get(i - 1);
                     }
                     if (!enemies.isEmpty()) {
                         player.getInventory().useItem(selectedItem.getItemID(), player, enemies);
@@ -218,9 +218,7 @@ public class CombatHandler {
                 } else {
                     System.out.println("Your inventory is empty! ");
                 }
-
         }
-
     }
 
     private void nameEnemies() {
@@ -230,6 +228,7 @@ public class CombatHandler {
             i++;
         }
     }
+
 
     public static Enemy selectTarget(ArrayList<Enemy> enemies) {
         int i = 1;
@@ -250,47 +249,17 @@ public class CombatHandler {
 
     private static ArrayList<Character> getTurnOrder(Player player, Enemy enemy) {
         ArrayList<Character> combatOrder = new ArrayList<>();
-        if (player.getStatBlock().getLitheness() > enemy.getStatBlock().getLitheness()) {
-            combatOrder.add(player);
-            combatOrder.add(enemy);
-        } else if (player.getStatBlock().getLitheness() < enemy.getStatBlock().getLitheness()) {
-            combatOrder.add(enemy);
-            combatOrder.add(player);
-        } else {
-            Random randomNum = new Random();
-            int result = randomNum.nextInt(2);
-            if (result == 1) {
-                combatOrder.add(player);
-                combatOrder.add(enemy);
-            } else {
-                combatOrder.add(enemy);
-                combatOrder.add(player);
-            }
-        }
+        combatOrder.add(player);
+        combatOrder.add(enemy);
+        combatOrder.sort(Comparator.comparing(Character::getStatBlock));
         return combatOrder;
     }
 
     private static ArrayList<Character> getTurnOrder(Player player, ArrayList<Enemy> enemies) {
         ArrayList<Character> combatOrder = new ArrayList<>();
-        //Groups enemy to the speed of the first for now, later could do individually
-        if (player.getStatBlock().getLitheness() > enemies.get(0).getStatBlock().getLitheness()) {
-            combatOrder.add(player);
-            combatOrder.addAll(enemies);
-
-        } else if (player.getStatBlock().getLitheness() < enemies.get(0).getStatBlock().getLitheness()) {
-            combatOrder.addAll(enemies);
-            combatOrder.add(player);
-        } else {
-            Random randomNum = new Random();
-            int result = randomNum.nextInt(2);
-            if (result == 1) {
-                combatOrder.add(player);
-                combatOrder.addAll(enemies);
-            } else {
-                combatOrder.addAll(enemies);
-                combatOrder.add(player);
-            }
-        }
+        combatOrder.add(player);
+        combatOrder.addAll(enemies);
+        combatOrder.sort(Comparator.comparing(Character::getStatBlock));
         return combatOrder;
     }
 }

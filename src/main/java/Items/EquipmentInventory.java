@@ -112,9 +112,11 @@ public class EquipmentInventory {
         for (int i = 0; i < this.currentlyEquipped.size(); i++) {
             Equipment equipment = this.currentlyEquipped.get(i);
             if (equipment.getBodySlot() == Equipment.BodySlot.MAINHAND || equipment.getBodySlot() == Equipment.BodySlot.OFFHAND) {
-                System.out.println("In your " + equipment.getBodySlot() + " you are holding your " + equipment.getName());
+                System.out.println("In your " + equipment.getBodySlot() + " you are holding your " + equipment.getName() + " - ");
+                System.out.printf(equipment.getExamineText()+"\n\n");
             } else {
-                System.out.println("On your " + equipment.getBodySlot() + " you are wearing your " + equipment.getName());
+                System.out.println("On your " + equipment.getBodySlot() + " you are wearing your " + equipment.getName() +" - ");
+                System.out.printf(equipment.getExamineText()+"\n\n");
             }
         }
         System.out.println("\nIn your inventory you have: ");
@@ -126,7 +128,7 @@ public class EquipmentInventory {
             System.out.println();
 
             while (true) {
-                System.out.println("Select a piece of Items.Equipment to equip, or enter -1 to exit");
+                System.out.println("Select a piece of Equipment to equip, or enter -1 to exit");
                 try {
                     int option = scanner.nextInt();
                     if (option == -1) {
