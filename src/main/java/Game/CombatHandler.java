@@ -1,3 +1,10 @@
+package Game;
+
+import Characters.Character;
+import Characters.Enemy;
+import Characters.Player;
+import Items.Item;
+
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -161,7 +168,7 @@ public class CombatHandler {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose your action hero!");
         System.out.println("1: Attack");
-        System.out.println("2: Use an Item");
+        System.out.println("2: Use an Items.Item");
         //System.out.println("3: Try to escape!");
         while (true) {
             try {
@@ -186,10 +193,9 @@ public class CombatHandler {
                 break;
             case 2:
                 int i = 0;
-                if (player.getInventory().getPlayerInventory().size() > 0) {
+                if (!player.getInventory().getPlayerInventory().isEmpty()) {
                     while (!(player.getInventory().findItem(i) == null) && (i == 0)) {
                         try {
-                            i = 0;
                             System.out.println("Choose an item to use:");
                             player.getInventory().seeInventory();
                             i = scanner.nextInt();

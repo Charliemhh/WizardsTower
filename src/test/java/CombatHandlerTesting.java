@@ -1,3 +1,8 @@
+import Characters.Enemy;
+import Characters.EnemyTypes;
+import Characters.Player;
+import Game.CombatHandler;
+
 import java.util.ArrayList;
 
 public class CombatHandlerTesting {

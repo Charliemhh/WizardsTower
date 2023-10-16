@@ -1,10 +1,12 @@
+package Game;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GameRoom {
-    private final int roomIndex; //Matches with index number from GameMap
+    private final int roomIndex; //Matches with index number from Game.GameMap
 
     private String shortDesc; //Used when entering
 
@@ -82,12 +84,8 @@ public class GameRoom {
     }
 
 
-    private void roomitemPickUp(RoomItems roomItems) {
-
-    }
-
-    enum RoomItemTypes {
-        EQUIPMENT, ITEM;
+    public enum RoomItemTypes {
+        EQUIPMENT, ITEM
     }
 
     public static class RoomItems {

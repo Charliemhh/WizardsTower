@@ -1,3 +1,5 @@
+package Characters;
+
 public class Enemy implements Character {
 
     private final int maxHP;

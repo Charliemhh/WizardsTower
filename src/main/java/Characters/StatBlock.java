@@ -1,3 +1,4 @@
+package Characters;
 
 public class StatBlock {
     private int strength; //Brute force damage
@@ -130,7 +131,7 @@ public class StatBlock {
                 int[] statsCalamari = {4, 2, 2, 10, 6};
                 this.setStats(statsCalamari);
                 break;
-            //Enemy types and stats not final.
+            //Characters.Enemy types and stats not final.
         }
     }
 }

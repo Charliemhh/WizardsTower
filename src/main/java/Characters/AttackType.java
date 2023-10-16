@@ -1,3 +1,5 @@
+package Characters;
+
 public enum AttackType {
     PHYSICAL(0), SARCASTIC(1), BRAINY(2), SNEAKY(3);
 

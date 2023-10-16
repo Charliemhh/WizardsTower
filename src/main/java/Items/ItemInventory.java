@@ -1,3 +1,8 @@
+package Items;
+
+import Characters.Enemy;
+import Characters.Player;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -40,7 +45,7 @@ public class ItemInventory {
         }
 
     }
-    public void useItemExplore(int itemID,Player player){
+    public void useItemExplore(int itemID, Player player){
         if (findItem(itemID) != null) {
             Item foundItem = findItem(itemID);
             switch (foundItem.getItemEffectType()) {
@@ -56,7 +61,7 @@ public class ItemInventory {
                     break;
             }
         } else {
-            System.out.println("Item was not found ERROR");
+            System.out.println("Items.Item was not found ERROR");
         }
     }
 
@@ -79,7 +84,7 @@ public class ItemInventory {
                     break;
             }
         } else {
-            System.out.println("Item was not found ERROR");
+            System.out.println("Items.Item was not found ERROR");
         }
     }
 
@@ -101,7 +106,7 @@ public class ItemInventory {
                     break;
             }
         } else {
-            System.out.println("Item was not found ERROR");
+            System.out.println("Items.Item was not found ERROR");
         }
     }
 
@@ -131,7 +136,7 @@ public class ItemInventory {
             }
         }
         while (true) {
-            System.out.println("Select an Item to use, or enter -1 to exit");
+            System.out.println("Select an Items.Item to use, or enter -1 to exit");
             try {
                 int option = scanner.nextInt();
                 if (option == -1) {

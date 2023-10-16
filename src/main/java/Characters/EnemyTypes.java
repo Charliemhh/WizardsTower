@@ -1,3 +1,5 @@
+package Characters;
+
 public class EnemyTypes {
     public static Enemy generateEnemy(int enemyTypeID) {
         switch (enemyTypeID) {
@@ -9,7 +11,7 @@ public class EnemyTypes {
                 return new Enemy("Smart-Mouthed Slime", 13, AttackType.SARCASTIC, 2, 40);
             case 3: //Under-Cooked Calamari
                 return new Enemy("Under-Cooked Calamari",11,AttackType.BRAINY,3, 45);
-            //Enemy types and stats not final.
+            //Characters.Enemy types and stats not final.
         }
         return null;
     }

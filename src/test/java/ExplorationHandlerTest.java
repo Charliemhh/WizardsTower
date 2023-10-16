@@ -1,3 +1,9 @@
+import Characters.Player;
+import Game.ExplorationHandler;
+import Game.GameMap;
+import Game.GameRoom;
+import Items.Equipment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

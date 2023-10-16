@@ -1,3 +1,10 @@
+package Game;
+
+import Characters.Enemy;
+import Characters.EnemyTypes;
+import Characters.Player;
+import Items.Equipment;
+
 import java.util.*;
 
 public class ExplorationHandler {

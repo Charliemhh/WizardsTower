@@ -1,3 +1,5 @@
+import Characters.Enemy;
+import Characters.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +30,6 @@ public class ItemTest {
                 "test",
                 1).build();
         testPlayer.getInventory().pickUp(3,5);
-        assertTrue(testPlayer.getInventory().findItem(3).getQuantity()==5);
+        assertEquals(5, testPlayer.getInventory().findItem(3).getQuantity());
     }
 }

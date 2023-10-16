@@ -1,6 +1,6 @@
+import Characters.Enemy;
+import Characters.Player;
 import org.junit.jupiter.api.Test;
-
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -19,7 +19,7 @@ public class InventoryTests {
                 "test", 0
         ).build();
         testPlayer.getInventory().removeFromInventory(0);
-        assertTrue(!Objects.equals(testPlayer.getInventory().getPlayerInventory().get(0).getName(), "Healing Potion"));
+        assertNotEquals("Healing Potion", testPlayer.getInventory().getPlayerInventory().get(0).getName());
     }
     @Test
     void canUseItemThroughInventory(){

@@ -1,3 +1,5 @@
+package Characters;
+
 public interface Character {
 
     int getCurrentHP();

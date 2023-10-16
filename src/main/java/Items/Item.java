@@ -1,10 +1,16 @@
+package Items;
+
+import Characters.Enemy;
+import Characters.Player;
+import Game.CombatHandler;
+
 import java.util.ArrayList;
 
 public class Item {
 
 
     public enum ItemEffectType {
-        HEALING, SINGLETARGET, MULTITARGET, CURE;
+        HEALING, SINGLETARGET, MULTITARGET, CURE
 
     }
     //Let the refactoring commence!
@@ -165,7 +171,7 @@ public class Item {
                         "The enemy is psychically damaged with how unfunny you are. Are you proud of yourself?",
                         ItemEffectType.SINGLETARGET,6,quantity);
         }
-        System.out.println("Not Valid Item ID");
+        System.out.println("Not Valid Items.Item ID");
         return null;
     }
 }

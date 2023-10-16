@@ -1,3 +1,5 @@
+import Characters.Enemy;
+import Characters.EnemyTypes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

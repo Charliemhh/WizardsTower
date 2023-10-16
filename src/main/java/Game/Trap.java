@@ -1,3 +1,5 @@
+package Game;
+
 public class Trap {
     private boolean activated;
     private final String activeDescription;
@@ -36,12 +38,12 @@ public class Trap {
 
         public static Trap createTrap(int id) {
             switch (id) {
-                case 0://Spike Trap
+                case 0://Spike Game.Trap
                     return new Trap(
                             "Spikes suddenly erupt from the ground!"
                             , "A small tripwire leads to a set of spikes, primed to launch.",
                             5);
-                case 1://Log Trap
+                case 1://Log Game.Trap
                     return new Trap(
                             "A series of large heavy logs roll towards you, threatening to bowl you over",
                             "A container of heavy logs threatens to be unleashed if one steps on the wrong panel.",

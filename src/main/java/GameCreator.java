@@ -1,7 +1,14 @@
+import Characters.Player;
+import Game.ExplorationHandler;
+import Game.GameMap;
+import Game.GameRoom;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import static Game.GameRoom.RoomItemTypes.*;
 
 public class GameCreator {
 

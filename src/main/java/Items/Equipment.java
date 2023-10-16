@@ -1,14 +1,18 @@
+package Items;
+
+import Characters.AttackType;
+
 public class Equipment {
 
 
 
 
     public enum BodySlot {
-        HEAD, CHEST, MAINHAND, OFFHAND, PANTS, SHOES, ARMS;
+        HEAD, CHEST, MAINHAND, OFFHAND, PANTS, SHOES, ARMS
     }
 
     public enum EquipmentEffectType {
-        DEFENCEBUFF, ATTACKBUFF, STATBUFF, NOBUFF;
+        DEFENCEBUFF, ATTACKBUFF, STATBUFF, NOBUFF
     }
 
     private final BodySlot bodySlot;

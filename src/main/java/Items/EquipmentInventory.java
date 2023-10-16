@@ -1,3 +1,8 @@
+package Items;
+
+import Characters.AttackType;
+import Characters.Player;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -18,7 +23,7 @@ public class EquipmentInventory {
         if (this.currentlyEquipped.contains(equipment)) {
             System.out.println("That slot is already occupied!");
         } else {
-            if (this.currentlyEquipped.size() == 0) {
+            if (this.currentlyEquipped.isEmpty()) {
                 this.currentlyEquipped.add(equipment);
             } else {
                 for (int i = 0; i < this.currentlyEquipped.size(); i++) {
@@ -121,7 +126,7 @@ public class EquipmentInventory {
             System.out.println();
 
             while (true) {
-                System.out.println("Select a piece of Equipment to equip, or enter -1 to exit");
+                System.out.println("Select a piece of Items.Equipment to equip, or enter -1 to exit");
                 try {
                     int option = scanner.nextInt();
                     if (option == -1) {

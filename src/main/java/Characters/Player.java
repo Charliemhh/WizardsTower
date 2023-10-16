@@ -1,3 +1,9 @@
+package Characters;
+
+import Items.Equipment;
+import Items.EquipmentInventory;
+import Items.ItemInventory;
+
 public class Player implements Character {
 
     private int currentLocation;
