@@ -3,7 +3,7 @@ package Characters;
 import Items.Equipment;
 import Items.EquipmentInventory;
 import Items.ItemInventory;
-
+import java.lang.Math;
 public class Player implements Character {
 
     private int currentLocation;
@@ -135,12 +135,16 @@ public class Player implements Character {
 
     public void addXP(int increaseAmount) {
         this.XP += increaseAmount;
-        while (this.XP >= 100) {
-            this.XP = (this.XP - 100);
+        while (this.XP >= getLevelAmount(this.playerLevel)) {
+            this.XP = (this.XP - getLevelAmount(this.playerLevel));
             levelUp();
             this.playerLevel += 1;
-            System.out.println("Your level has increased! you are now level " + this.playerLevel);
+            System.out.println("Your level has increased! You are now level " + this.playerLevel);
         }
+    }
+
+    private int getLevelAmount(int playerLevel) {
+        return Math.toIntExact(Math.round(100 * ((double) playerLevel /2)/0.8));
     }
 
     private void levelUp() {

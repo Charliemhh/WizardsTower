@@ -4,6 +4,7 @@ import Characters.Character;
 import Characters.Enemy;
 import Characters.Player;
 import Items.Item;
+
 import java.lang.Integer;
 import java.util.*;
 import java.util.stream.Stream;
@@ -20,8 +21,10 @@ public class CombatHandler {
 
     private ArrayList<Character> turnOrder = new ArrayList<>();
 
+    private boolean bossDefeated;
 
-    public void combatRound(Player player, Enemy enemy) {
+    public boolean combatRound(Player player, Enemy enemy) {
+        bossDefeated = false;
         if (player.getIsDead()) {
             combatOver = true;
         } else {
@@ -46,9 +49,11 @@ public class CombatHandler {
                 }
             }
         }
+        return bossDefeated;
     }
 
-    public void combatRound(Player player, ArrayList<Enemy> enemies) {
+    public boolean combatRound(Player player, ArrayList<Enemy> enemies) {
+        bossDefeated = false;
         if (player.getIsDead()) {
             combatOver = true;
         } else {
@@ -73,6 +78,7 @@ public class CombatHandler {
                 }
             }
         }
+        return bossDefeated;
     }
 
 
@@ -94,8 +100,11 @@ public class CombatHandler {
         } else {
             if (enemy.getIsDead()) {
                 System.out.println("The " + enemy.getName() + " dies, victory is yours!");
-                player.addXP(enemy.getRewardXP());
                 System.out.println("You gain " + enemy.getRewardXP() + "XP!\n");
+                if (enemy.isBoss()) {
+                    bossDefeated = true;
+                }
+                player.addXP(enemy.getRewardXP());
                 combatOver = true;
             }
         }
@@ -109,8 +118,11 @@ public class CombatHandler {
         for (Enemy e : enemies) {
             if (e.getIsDead()) {
                 System.out.println("The " + e.getName() + " dies");
-                player.addXP(e.getRewardXP());
                 System.out.println("You gain " + e.getRewardXP() + "XP!\n");
+                player.addXP(e.getRewardXP());
+                if (e.isBoss()) {
+                    bossDefeated = true;
+                }
                 deadList[i] = true;
                 deadToRemove = e;
             } else {
@@ -132,6 +144,9 @@ public class CombatHandler {
     private void makeAttack(Character attacker, Character target) {
         if (attacker.getClass() == Player.class) {
             int[] attackResults = attacker.getAttackDam();
+            if (attackResults[0] < 0) {
+                attackResults[0] = 0;
+            }
             String mainWeapon = player.getEquipment().getWeaponName();
             System.out.println(attacker.getName() + getAttackFlavor(attackResults[1]) +
                     target.getName() + " with their " + mainWeapon +
@@ -169,11 +184,10 @@ public class CombatHandler {
         System.out.println("Choose your action hero!");
         System.out.println("1: Attack");
         System.out.println("2: Use an Item");
-        //System.out.println("3: Try to escape!");
         while (true) {
             try {
                 option = scanner.nextInt();
-                if (option >= 1 && option <= 3) {
+                if (option >= 1 && option <= 2) {
                     break;
                 } else {
                     System.out.println("Dear hero, please enter a valid menu option.");
@@ -199,22 +213,30 @@ public class CombatHandler {
                             System.out.println("Choose an item to use:");
                             player.getInventory().seeInventory();
                             i = scanner.nextInt();
+                            Item selectedItem = null;
+                            try {
+                                if (player.getInventory().getPlayerInventory().get(i - 1) != null) {
+                                    if (player.getInventory().getPlayerInventory().size() == 1) {
+                                        selectedItem = player.getInventory().getPlayerInventory().get(0);
+                                    } else {
+                                        selectedItem = player.getInventory().getPlayerInventory().get(i - 1);
+                                    }
+                                    if (!enemies.isEmpty()) {
+                                        player.getInventory().useItem(selectedItem.getItemID(), player, enemies);
+                                    } else {
+                                        player.getInventory().useItem(selectedItem.getItemID(), player, enemy);
+                                    }
+                                }
+                            } catch (NullPointerException e) {
+                                System.out.println("Please select a valid option");
+                                scanner.next();
+                            }
                         } catch (InputMismatchException e) {
                             System.out.println("Please select a valid option!");
                             scanner.next();
                         }
                     }
-                    Item selectedItem = null;
-                    if (player.getInventory().getPlayerInventory().size() == 1) {
-                        selectedItem = player.getInventory().getPlayerInventory().get(0);
-                    } else {
-                        selectedItem = player.getInventory().getPlayerInventory().get(i - 1);
-                    }
-                    if (!enemies.isEmpty()) {
-                        player.getInventory().useItem(selectedItem.getItemID(), player, enemies);
-                    } else {
-                        player.getInventory().useItem(selectedItem.getItemID(), player, enemy);
-                    }
+
                 } else {
                     System.out.println("Your inventory is empty! ");
                 }

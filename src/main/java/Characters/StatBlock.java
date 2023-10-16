@@ -142,6 +142,14 @@ public class StatBlock implements Comparable<StatBlock> {
                 monsterStats = new int[]{4, 2, 4, 2, 4};
                 this.setStats(monsterStats);
                 break;
+            case 6://Frozen Yoghost
+                monsterStats = new int[]{1,1,9,9,6};
+                this.setStats(monsterStats);
+                break;
+            case 7://Head-Chef Zamsey
+                monsterStats = new int[]{5,13,11,11,12};
+                this.setStats(monsterStats);
+                break;
         }
     }
 

@@ -120,6 +120,14 @@ public class Equipment {
             case 13:
                 return new Equipment(13,BodySlot.CHEST,EquipmentEffectType.DEFENCEBUFF,null,2,
                         "Robe with holes in","At least it's comfortable to wear...");
+            case 14:
+                return new Equipment(14,BodySlot.MAINHAND,EquipmentEffectType.ATTACKBUFF,AttackType.PHYSICAL,3
+                        ,"Cool Sword","It's wearing a pair of sunglasses and a small leather jacket." +
+                        " It shouts 'Oh Yeah!' fairly regularly");
+            case 15:
+                return new Equipment(15,BodySlot.MAINHAND,EquipmentEffectType.ATTACKBUFF,AttackType.SNEAKY,5,
+                        "Gnomish Prison Shank","It has a very neatly written inscription on the side," +
+                        " for Velma - Love Truggley, It smells of happiness and love. It's stained crimson with blood");
         }
         return null;
     }

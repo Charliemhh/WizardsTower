@@ -14,6 +14,7 @@ public class ExplorationHandlerTest {
                 0).build();
         testPlayer.getEquipment().addToEquipmentInventory(Equipment.EquipmentGen(5));
         int[][] connections = {{1, 2}, {0, 2}, {0, 1}};
+        testPlayer.addXP(200);
         GameMap testMap = new GameMap(3, connections);
         GameRoom testRoom1 = new GameRoom(0);
         GameRoom testRoom2 = new GameRoom(1);

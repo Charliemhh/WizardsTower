@@ -14,6 +14,8 @@ public class Enemy implements Character {
 
     private boolean isDead;
 
+    private final boolean isBoss;
+
     private final AttackType attackType;
 
     @Override
@@ -69,9 +71,10 @@ public class Enemy implements Character {
         return new int[]{this.attackDam,attackTypeInt};
     }
 
-    public Enemy(String name, int maxHPBase, AttackType attackType, int enemyTypeID, int rewardXP) {
+    public Enemy(String name, int maxHPBase, AttackType attackType, int enemyTypeID, int rewardXP, boolean isBoss) {
         this.name = name;
         this.rewardXP = rewardXP;
+        this.isBoss = isBoss;
         this.isDead = false;
         this.statBlock = new StatBlock();
         this.statBlock.generateEnemyStats(enemyTypeID);
@@ -91,5 +94,9 @@ public class Enemy implements Character {
 
     public int getRewardXP() {
         return rewardXP;
+    }
+
+    public boolean isBoss() {
+        return isBoss;
     }
 }

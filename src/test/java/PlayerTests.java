@@ -74,7 +74,7 @@ public class PlayerTests {
                 "test", 0
         ).build();
         //Act
-        testPlayer.addXP(300);
+        testPlayer.addXP(500);
         //Assert
         assertEquals(19, testPlayer.getStatBlock().getPhysique());
     }

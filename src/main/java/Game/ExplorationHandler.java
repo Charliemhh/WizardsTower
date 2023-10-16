@@ -16,8 +16,8 @@ public class ExplorationHandler {
     private final ArrayList<GameRoom> gameRooms;
     private GameRoom currentRoom;
     private final CombatHandler combatHandler = new CombatHandler();
-    boolean firstRoom = true;
-    boolean endOfLevel = false; //To be used to end levels and cause the loading of the next down the line.
+    private boolean firstRoom = true;
+    private boolean endOfLevel; //To be used to end levels and cause the loading of the next down the line.
 
 
     public ExplorationHandler(Player player, GameMap gameMap, ArrayList<GameRoom> gameRooms) {
@@ -35,16 +35,23 @@ public class ExplorationHandler {
     }
 
     public void ExplorationStart() {
+        endOfLevel = false;
         currentRoom = getRoom(this.player.getCurrentLocation());
         System.out.println("You find yourself in " + currentRoom.getShortDesc());
-        while (!this.player.getIsDead()) {
+        while (!this.player.getIsDead() && !endOfLevel) {
             enemyCheck(currentRoom);
-            if (this.player.getIsDead()) {
+            if (this.player.getIsDead()||endOfLevel) {
                 break;
             }
             playerOption();
         }
-        System.out.println("Game Over!");
+        if (this.player.getIsDead()) {
+            System.out.println("Game Over!");
+        }
+        if (endOfLevel) {
+            System.out.println("Congratulations, you have completed the first level of the Wizard's Tower\n" +
+                    "Thank you for playing!");
+        }
     }
 
     private void enemyCheck(GameRoom currentRoom) {
@@ -54,11 +61,11 @@ public class ExplorationHandler {
                 for (int i : currentRoom.getEnemyInRoom()) {
                     enemies.add(EnemyTypes.generateEnemy(i));
                 }
-                combatHandler.combatRound(this.player, enemies);
+                endOfLevel = combatHandler.combatRound(this.player, enemies);
                 currentRoom.getEnemyInRoom().clear();
             } else {
                 Enemy enemy = EnemyTypes.generateEnemy(currentRoom.getEnemyInRoom().get(0));
-                combatHandler.combatRound(this.player, Objects.requireNonNull(enemy));
+                endOfLevel = combatHandler.combatRound(this.player, Objects.requireNonNull(enemy));
                 currentRoom.getEnemyInRoom().clear();
             }
         }
@@ -85,6 +92,7 @@ public class ExplorationHandler {
 
             } catch (InputMismatchException e) {
                 System.out.println("Please chose a valid option:");
+                scanner.next();
             }
         }
         switch (option) {
@@ -143,7 +151,11 @@ public class ExplorationHandler {
                     assert discoveredTrap != null;
                     System.out.println("You discover a trap!");
                     System.out.println(discoveredTrap.getDiscoveryDescription());
-                    currentRoom.getTrapInRoom().remove(trapID);
+                    if (currentRoom.getTrapInRoom().size() == 1) {
+                        currentRoom.getTrapInRoom().clear();
+                    } else {
+                        currentRoom.getTrapInRoom().remove(trapID);
+                    }
                     trapFound = true;
                     System.out.println("You carefully disarm the trap.");
                 }
@@ -160,7 +172,7 @@ public class ExplorationHandler {
         int option = 0;
         boolean choiceMade = false;
         var adjRoomList = gameMap.getMap().get(currentRoom.getRoomIndex());
-        while (!adjRoomList.contains(adjRoomList.get(option)) || (!choiceMade)) {
+        while ((!choiceMade) || !adjRoomList.contains(adjRoomList.get(option))) {
             try {
                 for (int i : adjRoomList) {
                     System.out.println(adjRoomList.indexOf(i) + 1 + " : " + currentRoom.getPassageLabels().get(i));
@@ -192,8 +204,9 @@ public class ExplorationHandler {
                         System.out.println(i + 1 + ":" + thing.getInspectDescription());
                         i++;
                     }
+                    System.out.println("Please select an option, or enter -1 to not grab anything.");
                     int option = scanner.nextInt();
-                    if (this.currentRoom.getThingsInRoom().get(option - 1) != null) {
+                    if (this.currentRoom.getThingsInRoom().get(option - 1) != null && option > 0) {
                         roomItemPickUp(this.currentRoom.getThingsInRoom().get(option - 1));
                         this.currentRoom.getThingsInRoom().remove(this.currentRoom.getThingsInRoom().get(option - 1));
                         break;
